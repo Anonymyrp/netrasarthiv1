@@ -19,7 +19,7 @@ const RecordingsPage = () => {
   const checkBackendConnection = async () => {
     try {
       setBackendStatus('checking');
-      const response = await fetch('http://localhost:5000/api/test');
+      const response = await fetch('https://netra-server-xy36.onrender.com/api/test');
       if (response.ok) {
         setBackendStatus('connected');
         fetchVideos();
@@ -42,7 +42,7 @@ const RecordingsPage = () => {
       setError(null);
       
       console.log('Fetching videos from backend...');
-      const response = await fetch('http://localhost:5000/api/cloudinary/videos');
+      const response = await fetch('https://netra-server-xy36.onrender.com/api/cloudinary/videos');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -194,7 +194,7 @@ const RecordingsPage = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this recording?')) {
       try {
-        const response = await fetch(`http://localhost:5000/api/cloudinary/videos/${id}`, {
+        const response = await fetch(`https://netra-server-xy36.onrender.com/api/cloudinary/videos/${id}`, {
           method: 'DELETE'
         });
         
