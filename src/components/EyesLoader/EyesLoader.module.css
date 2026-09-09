@@ -1,0 +1,65 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background: #0F0A07;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+    background: radial-gradient(ellipse 70% 65% at 50% 55%, transparent 0%, rgba(10,6,3,0.72) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+.overlay::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #B5541E;
+  opacity: 0.6;
+  z-index: 2;
+}
+.svgWrapper {
+  width: 90vmin;
+  max-width: 600px;
+  aspect-ratio: 1200 / 1000;
+  position: relative;
+  z-index: 3;
+}
+.svgWrapper svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  display: block;
+}
+:global(svg ellipse) { transform-box: fill-box; transform-origin: center; }
+:global(svg circle) { transform-box: fill-box; transform-origin: center; }
+:global(svg g#goggles) { transform: translateY(-1500px); }
+:global(svg g#helmet) { transform: translateY(-1800px); }
+:global(svg g) { transform-box: fill-box; transform-origin: top center; }
+@media (pointer: coarse) {
+  .svgWrapper { width: 85vmin; }
+}
+@media (hover: hover) {
+  /* Mouse hover available; no special loader adjustments needed */
+}
+@media (max-width: 480px) {
+  .svgWrapper { width: 85vmin; max-width: 320px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .overlay { display: none; }
+}

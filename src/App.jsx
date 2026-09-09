@@ -1,30 +1,15 @@
-import React from "react";
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Route,
-  RouterProvider,
-} from "react-router-dom";
-import Layout from "./Layout/Layout";
-import Home from "./Pages/Home";
-import RecordingsPage from "./Pages/Recordings";
-import LiveLocationPage from "./Pages/LiveLocationPage";
-import PastLocationPage from "./Pages/PastLocationPage";
+import React, { useState } from 'react';
+import EyesLoader from './components/EyesLoader/EyesLoader';
 
-
-function App() {
-  const router = createBrowserRouter(
-    createRoutesFromElements(
-      <Route path='/' element={<Layout/>}>
-        <Route index element={<Home/>}/>
-        <Route path="recordings" element={<RecordingsPage/>}/>
-        <Route path="live-location" element={<LiveLocationPage/>}/>
-        <Route path="pass-location" element={<PastLocationPage/>}/>
-      </Route>
-    )
+export default function App() {
+  const [loading, setLoading] = useState(true);
+  return (
+    <>
+      {loading && <EyesLoader onComplete={() => setLoading(false)} />}
+      <main style={{ opacity: loading ? 0 : 1, transition: 'opacity 0.6s ease', padding: '2rem' }}>
+        <h1>NetraSarthi Opening</h1>
+        <p>Loader complete. Site content revealed.</p>
+      </main>
+    </>
   );
-  
-  return <RouterProvider router={router} />;
 }
-
-export default App;
