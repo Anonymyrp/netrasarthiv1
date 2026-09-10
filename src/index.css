@@ -1,3 +1,25 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #0F0A07; color: #F0E6DC; font-family: system-ui, sans-serif; }
-main { max-width: 800px; margin: 0 auto; }
+@import "tailwindcss";
+
+@theme {
+  --color-bg-primary: #FAF6F0;
+  --color-bg-secondary: #F2EBE1;
+  --color-bg-card: #FFFFFF;
+  --color-accent-primary: #8B5E3C;
+  --color-accent-secondary: #A9744F;
+  --color-accent-light: #EFE1D3;
+  --color-text-primary: #2B2723;
+  --color-text-secondary: #6B6560;
+  --color-status-success: #4C8B5F;
+  --color-status-warning: #C99A3B;
+  --color-status-error: #B0463B;
+  --color-border: #E4DCD0;
+  --radius-card: 0.75rem;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+}

@@ -1,108 +1,56 @@
-import React from 'react';
-import { MapPin, Camera, Radio } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Radio, MapPin, Video } from 'lucide-react'
+import WelcomeSection from '../components/dashboard/WelcomeSection'
+import ServiceCards from '../components/dashboard/ServiceCards'
+import CurrentLocation from '../components/dashboard/CurrentLocation'
+import RecentActivity from '../components/dashboard/RecentActivity'
 
 function Home() {
+  const currentDate = new Date().toLocaleDateString('en-US', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  })
+
+  const services = [
+    { title: 'Live Location', description: 'Track real-time location and get instant updates.', path: '/live-location', icon: Radio },
+    { title: 'Past Locations', description: 'View location history and visited places.', path: '/past-locations', icon: MapPin },
+    { title: 'Recordings', description: 'Access and manage video recordings.', path: '/recordings', icon: Video },
+  ]
+
+  const activities = [
+    { id: 1, title: 'Reached Home', timestamp: 'Today, 6:12 PM', note: 'At saved place' },
+    { id: 2, title: 'Visited Grocery Store', timestamp: 'Today, 4:45 PM', note: 'Routine visit' },
+    { id: 3, title: 'Left Office', timestamp: 'Today, 1:23 PM', note: 'On usual route' },
+  ]
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-8">
-      <div className="max-w-6xl mx-auto">
-        {/* Hero Section */}
-        <header className="mb-16 text-center">
-         
-          
-        </header>
+    <div>
+      <WelcomeSection
+        userName="Shreya"
+        currentDate={currentDate}
+        supportingText="Here's what's happening right now."
+        sideText="Stay connected. Support their journey."
+      />
 
-        {/* Services Introduction */}
-        <div className="max-w-4xl mx-auto mb-16 text-center">
-          <h2 className="text-3xl font-bold text-gray-800 mb-6">
-            CareTaker Services
-          </h2>
-          <p className="text-gray-600 text-lg mb-12">
-            Click on any service to access its dedicated page
-          </p>
-        </div>
+      <ServiceCards services={services} />
 
-        {/* Functional Feature Cards with Links */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {/* Live Location Card */}
-          <Link 
-            to="/live-location"
-            className="group relative overflow-hidden bg-gradient-to-br from-blue-50 to-white rounded-3xl p-8 shadow-lg border border-blue-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-          >
-            
-            
-            <div className="flex flex-col items-start text-left relative">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                  <Radio className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-800">
-                  Live Location
-                </h3>
-              </div>
-              
-              <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-                Track real-time location updates with continuous live streaming and instant notifications
-              </p>
-            </div>
-          </Link>
+      <div className="grid grid-cols-3 gap-4 px-8 pb-8">
+        <CurrentLocation
+          status="active"
+          address="MG Road, Pune, Maharashtra"
+          accuracy={10}
+          updatedAt="2 mins ago"
+          onViewMap={() => {}}
+          onZoomIn={() => {}}
+          onZoomOut={() => {}}
+          onLocate={() => {}}
+        />
 
-          {/* Pass Location Card */}
-          <Link 
-            to="/pass-location"
-            className="group relative overflow-hidden bg-gradient-to-br from-emerald-50 to-white rounded-3xl p-8 shadow-lg border border-emerald-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-          >
-          
-            
-            <div className="flex flex-col items-start text-left relative">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center">
-                  <MapPin className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-800">
-                  Past Location
-                </h3>
-              </div>
-              
-              <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-                Share your current location securely with selected contacts or emergency services
-              </p>
-              
-              
-            </div>
-          </Link>
-
-          {/* Recordings Card */}
-          <Link 
-            to="/recordings"
-            className="group relative overflow-hidden bg-gradient-to-br from-purple-50 to-white rounded-3xl p-8 shadow-lg border border-purple-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-          >
-           
-            
-            <div className="flex flex-col items-start text-left relative">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
-                  <Camera className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-800">
-                  Recordings
-                </h3>
-              </div>
-              
-              <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-                Access and manage your complete location history with detailed analytics and insights
-              </p>
-              
-              
-            </div>
-          </Link>
-        </div>
-
-
-       
+        <RecentActivity activities={activities} onViewAll={() => {}} />
       </div>
     </div>
-  );
+  )
 }
 
-export default Home;
+export default Home
