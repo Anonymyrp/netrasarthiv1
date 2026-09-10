@@ -1,15 +1,37 @@
-import React, { useState } from 'react';
-import EyesLoader from './components/EyesLoader/EyesLoader';
+import { useState } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import EyesLoader from './components/EyesLoader'
+import DashboardLayout from './Layout/DashboardLayout'
+import Home from './Pages/Home'
 
-export default function App() {
-  const [loading, setLoading] = useState(true);
+function App() {
+  const [loading, setLoading] = useState(true)
+
+  if (loading) {
+    return <EyesLoader onComplete={() => setLoading(false)} />
+  }
+
+  const user = { name: 'Shreya', tagline: 'Care creates freedom' }
+
   return (
-    <>
-      {loading && <EyesLoader onComplete={() => setLoading(false)} />}
-      <main style={{ opacity: loading ? 0 : 1, transition: 'opacity 0.6s ease', padding: '2rem' }}>
-        <h1>NetraSarthi Opening</h1>
-        <p>Loader complete. Site content revealed.</p>
-      </main>
-    </>
-  );
+    <BrowserRouter>
+      <Routes>
+        <Route
+          element={
+            <DashboardLayout
+              user={user}
+              onLogout={() => {}}
+              onProfileClick={() => {}}
+              onNotificationClick={() => {}}
+              hasUnreadNotifications={true}
+            />
+          }
+        >
+          <Route path="/" element={<Home />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  )
 }
+
+export default App

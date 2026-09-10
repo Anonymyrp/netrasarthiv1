@@ -1,0 +1,64 @@
+import { NavLink } from 'react-router-dom'
+import { Home, Radio, MapPin, Video, Bell, Settings, LogOut } from 'lucide-react'
+
+const navItems = [
+  { label: 'Home', path: '/', icon: Home },
+  { label: 'Live Location', path: '/live-location', icon: Radio },
+  { label: 'Past Locations', path: '/past-locations', icon: MapPin },
+  { label: 'Recordings', path: '/recordings', icon: Video },
+  { label: 'Alerts', path: '/alerts', icon: Bell },
+  { label: 'Settings', path: '/settings', icon: Settings },
+]
+
+function Sidebar({ userName, userTagline, onLogout }) {
+  return (
+    <aside className="w-64 bg-bg-card border-r border-border flex flex-col h-screen">
+      <div className="p-6 flex items-center gap-3">
+        <div className="w-10 h-10 rounded-full bg-accent-primary text-white flex items-center justify-center font-semibold">
+          NS
+        </div>
+        <div>
+          <p className="font-semibold text-text-primary">Netra Sarthi</p>
+          <p className="text-xs text-text-secondary">A safer tomorrow</p>
+        </div>
+      </div>
+
+      <nav className="flex-1 px-3 mt-2 flex flex-col gap-1">
+        {navItems.map(({ label, path, icon: Icon }) => (
+          <NavLink
+            key={path}
+            to={path}
+            end={path === '/'}
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-3 py-2 rounded-card text-sm font-medium transition-colors ${
+                isActive
+                  ? 'bg-accent-light text-accent-primary'
+                  : 'text-text-secondary hover:bg-bg-secondary'
+              }`
+            }
+          >
+            <Icon size={18} />
+            {label}
+          </NavLink>
+        ))}
+      </nav>
+
+      <div className="p-4 border-t border-border flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-full bg-accent-secondary text-white flex items-center justify-center text-sm font-semibold">
+            {userName?.charAt(0)}
+          </div>
+          <div>
+            <p className="text-sm font-medium text-text-primary">{userName}</p>
+            <p className="text-xs text-text-secondary">{userTagline}</p>
+          </div>
+        </div>
+        <button onClick={onLogout} aria-label="Logout" className="text-text-secondary hover:text-status-error">
+          <LogOut size={18} />
+        </button>
+      </div>
+    </aside>
+  )
+}
+
+export default Sidebar
