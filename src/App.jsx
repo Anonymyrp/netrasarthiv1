@@ -12,35 +12,42 @@ import Settings from './Pages/Settings'
 function App() {
   const [loading, setLoading] = useState(true)
 
-  if (loading) {
-    return <EyesLoader onComplete={() => setLoading(false)} />
-  }
-
   const user = { name: 'Shreya', tagline: 'Care creates freedom' }
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          element={
-            <DashboardLayout
-              user={user}
-              onLogout={() => {}}
-              onProfileClick={() => {}}
-              onNotificationClick={() => {}}
-              hasUnreadNotifications={true}
-            />
-          }
-        >
-          <Route path="/" element={<Home />} />
-          <Route path="/live-location" element={<LiveLocation />} />
-          <Route path="/past-locations" element={<PastLocations />} />
-          <Route path="/recordings" element={<Recordings />} />
-          <Route path="/alerts" element={<Alerts />} />
-          <Route path="/settings" element={<Settings />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <>
+      {loading && <EyesLoader onComplete={() => setLoading(false)} />}
+      <div
+        className="min-h-screen"
+        style={{
+          pointerEvents: loading ? 'none' : 'auto',
+          userSelect: loading ? 'none' : 'auto',
+        }}
+      >
+        <BrowserRouter>
+          <Routes>
+            <Route
+              element={
+                <DashboardLayout
+                  user={user}
+                  onLogout={() => {}}
+                  onProfileClick={() => {}}
+                  onNotificationClick={() => {}}
+                  hasUnreadNotifications={true}
+                />
+              }
+            >
+              <Route path="/" element={<Home />} />
+              <Route path="/live-location" element={<LiveLocation />} />
+              <Route path="/past-locations" element={<PastLocations />} />
+              <Route path="/recordings" element={<Recordings />} />
+              <Route path="/alerts" element={<Alerts />} />
+              <Route path="/settings" element={<Settings />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </>
   )
 }
 
