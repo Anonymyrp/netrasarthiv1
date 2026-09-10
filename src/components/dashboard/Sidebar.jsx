@@ -23,22 +23,26 @@ function Sidebar({ userName, userTagline, onLogout }) {
         </div>
       </div>
 
-      <nav className="flex-1 px-3 mt-2 flex flex-col gap-1">
+      <nav className="flex-1 px-3 mt-3 flex flex-col gap-1.5">
         {navItems.map(({ label, path, icon: Icon }) => (
           <NavLink
             key={path}
             to={path}
             end={path === '/'}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2 rounded-card text-sm font-medium transition-colors ${
+              `flex items-center gap-3 px-3 py-2.5 rounded-card text-sm font-medium transition-all duration-150 ${
                 isActive
-                  ? 'bg-accent-light text-accent-primary'
-                  : 'text-text-secondary hover:bg-bg-secondary'
+                  ? 'bg-accent-light text-accent-primary shadow-sm'
+                  : 'text-text-secondary hover:bg-bg-secondary hover:text-text-primary'
               }`
             }
           >
-            <Icon size={18} />
-            {label}
+            {({ isActive }) => (
+              <>
+                <Icon size={19} strokeWidth={isActive ? 2.4 : 2} className="shrink-0" />
+                <span>{label}</span>
+              </>
+            )}
           </NavLink>
         ))}
       </nav>
