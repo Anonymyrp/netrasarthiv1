@@ -787,18 +787,27 @@ button.glass-card:hover {
 }
 
 .nav-inactive {
-  color: #4A637D !important;
+  color: #33506E !important;
 }
 
 .nav-inactive:hover {
-  background: rgba(47, 128, 255, 0.1) !important;
-  border-color: rgba(47, 128, 255, 0.22) !important;
+  background: linear-gradient(135deg, rgba(47, 128, 255, 0.2), rgba(53, 191, 255, 0.12)) !important;
+  border-color: rgba(47, 128, 255, 0.42) !important;
   color: #0E2342 !important;
-  box-shadow: 0 4px 16px rgba(70, 110, 160, 0.16) !important;
+  box-shadow:
+    0 6px 18px rgba(47, 128, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+  transform: translateX(2px);
 }
 
 .nav-inactive svg {
-  color: rgba(70, 100, 135, 0.8);
+  color: #2F80FF;
+  opacity: 0.85;
+}
+
+.nav-inactive:hover svg {
+  color: #1D6FF2;
+  opacity: 1;
 }
 
 /* ——— Controls: white glass pill + chips ——— */
@@ -844,7 +853,8 @@ span[class*="bg-white/10"] {
   background-color: rgba(47, 128, 255, 0.1) !important;
 }
 
-button[class*="hover:bg-white/5"]:hover {
+button[class*="hover:bg-white/5"]:hover,
+a[class*="hover:bg-white/5"]:hover {
   background-color: rgba(47, 128, 255, 0.1) !important;
 }
 
@@ -904,3 +914,8 @@ button[class*="hover:bg-white/5"]:hover {
 
 /* NOTE: .map-dark, Leaflet controls, .btn-primary and video modal stay dark
    on purpose — dark islands that anchor the airy page. */
+
+/* Appearance toggle: hide the photographic layer, keep the misty gradient */
+body.no-bg-image::before {
+  display: none;
+}

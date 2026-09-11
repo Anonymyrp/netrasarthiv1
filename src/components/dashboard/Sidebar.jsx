@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { Home, Radio, MapPin, Video, Bell, Settings, LogOut, X, Menu } from 'lucide-react'
+import { Home, Radio, MapPin, Video, Bell, Settings, X, Menu } from 'lucide-react'
 import { useState } from 'react'
 
 const navItems = [
@@ -11,7 +11,7 @@ const navItems = [
   { label: 'Settings', path: '/settings', icon: Settings },
 ]
 
-function Sidebar({ userName, userTagline, onLogout }) {
+function Sidebar() {
   const [isOpen, setIsOpen] = useState(true)
 
   if (!isOpen) {
@@ -64,21 +64,6 @@ function Sidebar({ userName, userTagline, onLogout }) {
           </NavLink>
         ))}
       </nav>
-
-      <div className="p-4 border-t border-border bg-[rgba(10,25,50,0.35)] backdrop-blur-xl flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-accent-secondary text-white flex items-center justify-center text-sm font-semibold avatar-ring">
-            {userName?.charAt(0)}
-          </div>
-          <div>
-            <p className="text-sm font-medium text-text-primary">{userName}</p>
-            <p className="text-xs text-text-secondary">{userTagline}</p>
-          </div>
-        </div>
-        <button onClick={onLogout} aria-label="Logout" className="text-text-secondary hover:text-status-error">
-          <LogOut size={18} />
-        </button>
-      </div>
     </aside>
   )
 }

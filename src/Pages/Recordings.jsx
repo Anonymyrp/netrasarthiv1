@@ -4,9 +4,7 @@ import { mockRecordings, mockStorageStats } from '../data/mockDashboardData'
 
 function Recordings() {
   return (
-    <div className="px-8 py-6 flex flex-col gap-4">
-      <h1 className="text-xl font-semibold text-text-primary">Recordings</h1>
-
+    <div className="px-8 pt-4 pb-6 flex flex-col gap-4">
       <div className="grid grid-cols-4 gap-4">
         <div className="col-span-3 grid grid-cols-3 gap-4">
           {mockRecordings.length === 0 ? (

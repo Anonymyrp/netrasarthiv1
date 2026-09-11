@@ -18,7 +18,7 @@ function AlertItem({ title, message, timestamp, severity, read, onMarkRead }) {
         <p className="text-xs text-text-secondary mt-1">{timestamp}</p>
       </div>
       {!read && (
-        <button onClick={onMarkRead} className="text-xs font-medium text-accent-primary">
+        <button onClick={onMarkRead} className="text-xs font-medium text-accent-primary hover:text-accent-secondary transition-all duration-100 active:scale-95 shrink-0">
           Mark read
         </button>
       )}

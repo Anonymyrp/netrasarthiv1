@@ -22,9 +22,8 @@ function PastLocations() {
   const selectedEntry = filteredEntries.find((entry) => entry.id === selectedId) || filteredEntries[0]
 
   return (
-    <div className="px-8 py-6 flex flex-col gap-4 h-[calc(100vh-88px)]">
-      <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold text-text-primary">Past Locations</h1>
+    <div className="px-8 pt-4 pb-6 flex flex-col gap-4 h-[calc(100vh-88px)]">
+      <div className="flex items-center">
         <LocationFilterTabs filters={filters} activeFilter={activeFilter} onChange={setActiveFilter} />
       </div>
 

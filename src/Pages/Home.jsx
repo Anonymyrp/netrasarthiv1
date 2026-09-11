@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { Radio, MapPin, Video } from 'lucide-react'
 import WelcomeSection from '../components/dashboard/WelcomeSection'
 import ServiceCards from '../components/dashboard/ServiceCards'
@@ -16,6 +17,7 @@ import {
 } from '../data/mockDashboardData'
 
 function Home() {
+  const navigate = useNavigate()
   const currentDate = new Date().toLocaleDateString('en-US', {
     weekday: 'long',
     day: 'numeric',
@@ -51,7 +53,7 @@ function Home() {
           address={mockCurrentLocation.address}
           accuracy={mockCurrentLocation.accuracy}
           updatedAt={mockCurrentLocation.updatedAt}
-          onViewMap={() => {}}
+          onViewMap={() => navigate('/live-location')}
           onZoomIn={() => {}}
           onZoomOut={() => {}}
           onLocate={() => {}}
