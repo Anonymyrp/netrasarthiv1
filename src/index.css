@@ -669,9 +669,9 @@
   --color-bg-primary: #E3F2FD;
   --color-bg-secondary: #FFFFFF;
   --color-bg-tertiary: #C9E4FA;
-  --color-bg-card: rgba(255, 255, 255, 0.62);
-  --color-glass: rgba(255, 255, 255, 0.62);
-  --color-glass-soft: rgba(255, 255, 255, 0.48);
+  --color-bg-card: rgba(255, 255, 255, 0.8);
+  --color-glass: rgba(255, 255, 255, 0.8);
+  --color-glass-soft: rgba(255, 255, 255, 0.8);
   --color-glass-border: rgba(255, 255, 255, 0.9);
   --color-accent-primary: #2F80FF;
   --color-accent-secondary: #0284C7;
@@ -740,7 +740,7 @@ input::placeholder {
 
 /* ——— White frosted panels with hairline blue edge ——— */
 .glass-card {
-  background: linear-gradient(165deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.55) 48%, rgba(226, 240, 253, 0.62) 100%) !important;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.84) 0%, rgba(255, 255, 255, 0.8) 48%, rgba(226, 240, 253, 0.82) 100%) !important;
   border: 1px solid rgba(255, 255, 255, 0.9) !important;
   box-shadow:
     0 12px 40px rgba(70, 110, 160, 0.18),
@@ -754,7 +754,7 @@ input::placeholder {
 
 a.glass-card:hover,
 button.glass-card:hover {
-  background: linear-gradient(165deg, rgba(255, 255, 255, 0.86) 0%, rgba(255, 255, 255, 0.68) 48%, rgba(222, 238, 253, 0.74) 100%) !important;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.86) 48%, rgba(222, 238, 253, 0.88) 100%) !important;
   border-color: rgba(47, 128, 255, 0.35) !important;
   box-shadow:
     0 16px 44px rgba(70, 110, 160, 0.22),
@@ -764,7 +764,7 @@ button.glass-card:hover {
 
 /* ——— Sidebar: brighter white glass ——— */
 .glass-sidebar {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, rgba(214, 233, 250, 0.72) 100%) !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(214, 233, 250, 0.84) 100%) !important;
   border-right: 1px solid rgba(255, 255, 255, 0.8) !important;
   box-shadow:
     10px 0 36px rgba(70, 110, 160, 0.15),
@@ -803,7 +803,7 @@ button.glass-card:hover {
 
 /* ——— Controls: white glass pill + chips ——— */
 .search-pill {
-  background: rgba(255, 255, 255, 0.66) !important;
+  background: rgba(255, 255, 255, 0.8) !important;
   border: 1px solid rgba(255, 255, 255, 0.9) !important;
   box-shadow:
     0 4px 18px rgba(70, 110, 160, 0.16),
@@ -860,7 +860,7 @@ button[class*="hover:bg-white/5"]:hover {
 
 /* ——— Secondary glass button needs dark text on white ——— */
 .btn-glass {
-  background: rgba(255, 255, 255, 0.6) !important;
+  background: rgba(255, 255, 255, 0.8) !important;
   border: 1px solid rgba(47, 128, 255, 0.3) !important;
   color: #1D5FCC !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85) !important;
@@ -883,7 +883,7 @@ button[class*="hover:bg-white/5"]:hover {
 
 /* ——— Alerts + badges follow the white glass ——— */
 .glass-alerts {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(222, 238, 253, 0.6) 100%) !important;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.82) 0%, rgba(222, 238, 253, 0.8) 100%) !important;
   border: 1px solid rgba(255, 255, 255, 0.9) !important;
   box-shadow:
     0 12px 36px rgba(70, 110, 160, 0.18),
@@ -892,7 +892,7 @@ button[class*="hover:bg-white/5"]:hover {
 }
 
 .live-badge {
-  background: rgba(255, 255, 255, 0.6) !important;
+  background: rgba(255, 255, 255, 0.8) !important;
   border: 1px solid rgba(47, 128, 255, 0.22) !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85) !important;
 }
