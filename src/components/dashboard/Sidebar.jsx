@@ -19,7 +19,7 @@ function Sidebar({ userName, userTagline, onLogout }) {
       <button
         onClick={() => setIsOpen(true)}
         aria-label="Open sidebar"
-        className="fixed top-4 left-4 z-40 w-10 h-10 rounded-card bg-bg-card border border-border flex items-center justify-center text-text-secondary hover:text-accent-primary shadow-sm"
+        className="fixed top-4 left-4 z-40 w-10 h-10 rounded-card bg-bg-card border border-border backdrop-blur-xl flex items-center justify-center text-text-secondary hover:text-accent-primary shadow-sm"
       >
         <Menu size={18} />
       </button>
@@ -27,9 +27,9 @@ function Sidebar({ userName, userTagline, onLogout }) {
   }
 
   return (
-    <aside className={`${isOpen ? 'w-64' : 'w-20'} glass-card flex flex-col h-screen transition-all duration-200`}>
+    <aside className={`${isOpen ? 'w-64' : 'w-20'} glass-sidebar flex flex-col h-screen sticky top-0 transition-all duration-200`}>
       <div className="p-6 pb-4 flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-accent-primary text-white flex items-center justify-center font-semibold">
+        <div className="w-10 h-10 rounded-full bg-accent-primary text-white flex items-center justify-center font-semibold border border-white/20 shadow-[0_0_18px_rgba(47,128,255,0.45),inset_0_1px_0_rgba(255,255,255,0.25)]">
           NS
         </div>
         <div className="flex-1">
@@ -50,8 +50,8 @@ function Sidebar({ userName, userTagline, onLogout }) {
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2.5 rounded-card text-sm font-medium transition-all duration-150 ${
                 isActive
-                  ? 'bg-accent-primary text-white shadow-md'
-                  : 'text-text-secondary hover:bg-bg-secondary hover:text-text-primary'
+                  ? 'nav-active'
+                  : 'nav-inactive'
               }`
             }
           >
@@ -65,9 +65,9 @@ function Sidebar({ userName, userTagline, onLogout }) {
         ))}
       </nav>
 
-      <div className="p-4 border-t border-border flex items-center justify-between">
+      <div className="p-4 border-t border-border bg-[rgba(10,25,50,0.35)] backdrop-blur-xl flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-accent-secondary text-white flex items-center justify-center text-sm font-semibold">
+          <div className="w-9 h-9 rounded-full bg-accent-secondary text-white flex items-center justify-center text-sm font-semibold avatar-ring">
             {userName?.charAt(0)}
           </div>
           <div>

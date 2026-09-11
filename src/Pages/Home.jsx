@@ -50,15 +50,15 @@ function Home() {
         <RecentActivity activities={activities} onViewAll={() => {}} />
       </div>
 
-      <section className="mx-8 mb-8 glass-card rounded-card p-4 flex items-center gap-4">
-        <div className="w-10 h-10 rounded-full bg-accent-light flex items-center justify-center text-accent-primary">
+      <section className="glass-alerts mx-8 mb-8 rounded-card p-4 flex items-center gap-4">
+        <div className="glass-icon w-10 h-10 rounded-full flex items-center justify-center shrink-0">
           <Bell size={20} />
         </div>
         <div>
           <p className="font-semibold text-text-primary">Smart Alerts</p>
           <p className="text-sm text-text-secondary">Get notified when they reach or leave important places.</p>
         </div>
-        <ArrowRight size={18} className="ml-auto text-text-secondary" />
+        <ArrowRight size={18} className="ml-auto text-accent-primary shrink-0" />
       </section>
     </div>
   )

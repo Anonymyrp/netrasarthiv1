@@ -3,9 +3,9 @@ import { ArrowRight } from 'lucide-react'
 
 function ServiceCards({ services }) {
   const tileStyles = [
-    'bg-accent-light text-accent-primary',
-    'bg-white/10 text-text-primary',
-    'bg-status-warning/15 text-status-warning',
+    'glass-icon',
+    'glass-icon-cyan',
+    'glass-icon',
   ]
   return (
     <section className="grid grid-cols-3 gap-4 px-8 pb-6">

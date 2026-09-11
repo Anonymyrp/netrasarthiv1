@@ -10,8 +10,8 @@ function WelcomeSection({ userName, currentDate, supportingText, sideText }) {
       </div>
 
       <div className="flex flex-col items-end gap-2">
-        <span className="flex items-center gap-2 rounded-card border border-status-success/30 bg-status-success/15 px-3 py-2 text-xs">
-          <span className="w-2.5 h-2.5 rounded-full bg-status-success animate-pulse" />
+        <span className="safety-pill flex items-center gap-2 rounded-full px-3 py-2 text-xs">
+          <span className="safety-dot w-2.5 h-2.5 rounded-full animate-pulse" />
           <span>
             <span className="block font-semibold text-status-success">User is safe</span>
             <span className="block text-text-secondary">Last updated 2 min ago</span>
