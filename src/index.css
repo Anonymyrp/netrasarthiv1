@@ -41,14 +41,17 @@
     min-height: 100vh;
     background-color: #07172E;
     background-image:
-      linear-gradient(180deg, #050E1F 0%, #07172E 100%);
+      linear-gradient(180deg, rgba(5, 14, 31, 0.70) 0%, rgba(7, 23, 46, 0.78) 100%);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     letter-spacing: -0.005em;
     overflow-x: hidden;
-  }
+  } 
 
   body::before {
     content: "";
@@ -57,9 +60,9 @@
     z-index: 0;
     pointer-events: none;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='sky' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%230A1D38'/%3E%3Cstop offset='0.35' stop-color='%230D2749'/%3E%3Cstop offset='0.52' stop-color='%23123B4A'/%3E%3Cstop offset='0.68' stop-color='%230C2340'/%3E%3Cstop offset='1' stop-color='%2307172E'/%3E%3C/linearGradient%3E%3ClinearGradient id='mist' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23B9D2EA' stop-opacity='0'/%3E%3Cstop offset='0.5' stop-color='%23B9D2EA' stop-opacity='0.12'/%3E%3Cstop offset='1' stop-color='%23B9D2EA' stop-opacity='0'/%3E%3C/linearGradient%3E%3ClinearGradient id='shade' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%2307172E' stop-opacity='0.55'/%3E%3Cstop offset='1' stop-color='%2307172E' stop-opacity='0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1600' height='900' fill='url(%23sky)'/%3E%3Cellipse cx='1190' cy='190' rx='360' ry='200' fill='%232F80FF' opacity='0.07'/%3E%3Cellipse cx='1170' cy='230' rx='250' ry='130' fill='%238FB6D8' opacity='0.06'/%3E%3Cpath d='M0 540 L120 478 L260 530 L400 468 L540 538 L680 486 L820 540 L960 484 L1100 540 L1240 482 L1380 540 L1500 496 L1600 532 L1600 900 L0 900 Z' fill='%231B3A56' opacity='0.40'/%3E%3Cpath d='M0 590 L150 528 L300 588 L450 526 L600 592 L760 530 L910 594 L1070 530 L1220 592 L1370 534 L1500 588 L1600 560 L1600 900 L0 900 Z' fill='%23132A44' opacity='0.62'/%3E%3Cellipse cx='810' cy='520' rx='300' ry='58' fill='%23123B4A' opacity='0.32'/%3E%3Cpath d='M660 900 C690 800 600 740 690 660 C760 600 850 585 795 528 L828 528 C895 585 830 610 755 670 C675 735 770 800 745 900 Z' fill='%232E4C68' opacity='0.30'/%3E%3Cpath d='M700 900 C715 810 650 750 715 680 C760 635 810 600 792 545 L804 545 C828 600 785 640 745 685 C690 745 740 810 728 900 Z' fill='%2346688A' opacity='0.12'/%3E%3Cpath d='M660 900 C690 800 600 740 690 660 C760 600 850 585 795 528' fill='none' stroke='%2393B0CC' stroke-width='3' opacity='0.10'/%3E%3Cpath d='M745 900 C770 800 675 735 755 670 C830 610 895 585 828 528' fill='none' stroke='%2393B0CC' stroke-width='3' opacity='0.10'/%3E%3Cellipse cx='810' cy='545' rx='330' ry='72' fill='%23B9D2EA' opacity='0.10'/%3E%3Crect x='0' y='498' width='1600' height='96' fill='url(%23mist)'/%3E%3Cpath d='M0 560 L0 900 L420 900 C400 800 380 700 360 620 C280 600 180 640 120 600 C80 575 40 580 0 560 Z' fill='%230B1C33' opacity='0.88'/%3E%3Cpath d='M1600 555 L1600 900 L1180 900 C1200 800 1220 700 1245 618 C1320 598 1420 638 1485 600 C1525 578 1565 578 1600 555 Z' fill='%23091829' opacity='0.90'/%3E%3Crect x='0' y='560' width='1600' height='66' fill='%23A9C4DE' opacity='0.07'/%3E%3Crect x='0' y='638' width='1600' height='56' fill='%23A9C4DE' opacity='0.05'/%3E%3Cpath d='M0 760 L70 700 L130 752 L200 696 L270 754 L340 700 L410 756 L470 712 L520 758 L560 730 L600 760 L600 900 L0 900 Z' fill='%23050D1D' opacity='0.94'/%3E%3Cpath d='M1000 762 L1040 730 L1080 760 L1140 726 L1200 762 L1260 700 L1330 754 L1400 696 L1470 754 L1530 700 L1600 752 L1600 900 L1000 900 Z' fill='%23050D1D' opacity='0.94'/%3E%3Cellipse cx='800' cy='350' rx='540' ry='270' fill='%2307172E' opacity='0.44'/%3E%3Crect x='0' y='720' width='1600' height='180' fill='%23050E1F' opacity='0.50'/%3E%3Crect x='0' y='240' width='1600' height='220' fill='url(%23shade)'/%3E%3C/svg%3E") center center / cover no-repeat;
-    filter: blur(20px) saturate(0.78) brightness(0.82) contrast(0.96);
-    transform: scale(1.09);
-    opacity: 0.78;
+    filter: blur(8px) saturate(0.90) brightness(0.95) contrast(1.04);
+    transform: scale(1.03);
+    opacity: 0.12;
     animation: bg-drift 40s ease-in-out infinite alternate;
   }
 
@@ -70,10 +73,9 @@
     z-index: 0;
     pointer-events: none;
     background:
-      radial-gradient(ellipse 40% 26% at 74% 12%, rgba(47, 128, 255, 0.06), transparent 70%),
-      radial-gradient(ellipse 34% 20% at 51% 58%, rgba(120, 170, 205, 0.05), transparent 70%),
-      linear-gradient(180deg, rgba(7, 23, 46, 0.48) 0%, rgba(8, 24, 48, 0.44) 42%, rgba(5, 14, 31, 0.52) 100%),
-      radial-gradient(ellipse 90% 72% at 50% 42%, transparent 48%, rgba(2, 6, 16, 0.44) 100%);
+      radial-gradient(ellipse 40% 26% at 74% 12%, rgba(47, 128, 255, 0.04), transparent 70%),
+      linear-gradient(180deg, rgba(7, 23, 46, 0.06) 0%, rgba(8, 24, 48, 0.08) 42%, rgba(5, 14, 31, 0.16) 100%),
+      radial-gradient(ellipse 90% 72% at 50% 42%, transparent 48%, rgba(2, 6, 16, 0.12) 100%);
   }
 
   @keyframes bg-drift {
@@ -137,10 +139,10 @@
 
 @layer components {
   .glass-card {
-    background: linear-gradient(165deg, rgba(22, 42, 76, 0.22) 0%, rgba(12, 26, 52, 0.18) 48%, rgba(9, 20, 40, 0.24) 100%);
-    backdrop-filter: blur(28px) saturate(160%);
-    -webkit-backdrop-filter: blur(28px) saturate(160%);
-    border: 1px solid rgba(178, 208, 244, 0.16);
+    background: linear-gradient(165deg, rgba(22, 42, 76, 0.18) 0%, rgba(12, 26, 52, 0.12) 48%, rgba(9, 20, 40, 0.18) 100%);
+    backdrop-filter: blur(22px) saturate(145%);
+    -webkit-backdrop-filter: blur(22px) saturate(145%);
+    border: 1px solid rgba(190, 220, 255, 0.20);
     border-radius: 16px;
     box-shadow:
       0 12px 40px rgba(2, 6, 16, 0.30),
@@ -177,10 +179,10 @@
   }
 
   .glass-sidebar {
-    background: linear-gradient(180deg, rgba(8, 20, 40, 0.48) 0%, rgba(5, 14, 31, 0.52) 100%);
-    backdrop-filter: blur(32px) saturate(160%);
-    -webkit-backdrop-filter: blur(32px) saturate(160%);
-    border-right: 1px solid rgba(178, 208, 244, 0.12);
+    background: linear-gradient(180deg, rgba(8, 20, 40, 0.34) 0%, rgba(5, 14, 31, 0.42) 100%);
+    backdrop-filter: blur(26px) saturate(145%);
+    -webkit-backdrop-filter: blur(26px) saturate(145%);
+    border-right: 1px solid rgba(190, 220, 255, 0.16);
     box-shadow:
       10px 0 36px rgba(2, 6, 16, 0.30),
       inset 0 1px 0 rgba(255, 255, 255, 0.07);
@@ -690,27 +692,31 @@ html {
 }
 
 body {
-  background-color: #E3F2FD;
+  background-color: #9FB8D4;
   background-image:
-    radial-gradient(ellipse 55% 38% at 82% 6%, rgba(255, 255, 255, 0.9), transparent 65%),
-    radial-gradient(ellipse 45% 35% at 8% 12%, rgba(187, 222, 251, 0.7), transparent 65%),
-    radial-gradient(ellipse 70% 45% at 50% 108%, rgba(144, 202, 249, 0.55), transparent 70%),
-    radial-gradient(ellipse 38% 30% at 18% 78%, rgba(255, 255, 255, 0.65), transparent 70%),
-    linear-gradient(180deg, #EAF5FE 0%, #E3F2FD 45%, #D3E9FB 100%);
+    linear-gradient(180deg, rgba(190, 220, 250, 0.12) 0%, rgba(170, 205, 242, 0.18) 100%);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
-/* Wash the painted ridges pale so they read as distant mist, not night */
+/* Real photograph layer — the single source of the background image */
 body::before {
-  opacity: 0.42;
-  filter: blur(24px) saturate(0.5) brightness(2.7) contrast(0.88);
+  inset: -24px;
+  background: url('https://images.unsplash.com/photo-1724405143873-cdaa5cac918e?q=80&w=2400&auto=format&fit=crop') center / cover no-repeat;
+  filter: blur(4px) saturate(0.95) brightness(0.96);
+  transform: scale(1.03);
+  opacity: 0.6;
+  animation: none;
 }
 
-/* Light veil + soft cool vignette keeps glass readable */
+/* Light veil + soft cool vignette: thin enough to show the photo, thick enough to read text */
 body::after {
   background:
-    radial-gradient(ellipse 42% 26% at 74% 10%, rgba(255, 255, 255, 0.55), transparent 70%),
-    linear-gradient(180deg, rgba(227, 242, 253, 0.62) 0%, rgba(234, 245, 254, 0.5) 45%, rgba(211, 233, 251, 0.66) 100%),
-    radial-gradient(ellipse 92% 74% at 50% 42%, transparent 55%, rgba(93, 133, 182, 0.22) 100%);
+    radial-gradient(ellipse 42% 26% at 74% 10%, rgba(255, 255, 255, 0.18), transparent 70%),
+    linear-gradient(180deg, rgba(227, 242, 253, 0.30) 0%, rgba(234, 245, 254, 0.34) 45%, rgba(211, 233, 251, 0.38) 100%),
+    radial-gradient(ellipse 92% 74% at 50% 42%, transparent 55%, rgba(53, 96, 145, 0.14) 100%);
 }
 
 h1,
@@ -740,7 +746,7 @@ input::placeholder {
 
 /* ——— White frosted panels with hairline blue edge ——— */
 .glass-card {
-  background: linear-gradient(165deg, rgba(255, 255, 255, 0.84) 0%, rgba(255, 255, 255, 0.8) 48%, rgba(226, 240, 253, 0.82) 100%) !important;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.58) 0%, rgba(255, 255, 255, 0.48) 48%, rgba(226, 240, 253, 0.58) 100%) !important;
   border: 1px solid rgba(255, 255, 255, 0.9) !important;
   box-shadow:
     0 12px 40px rgba(70, 110, 160, 0.18),
@@ -749,7 +755,7 @@ input::placeholder {
 }
 
 .glass-card::before {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.15) 14%, transparent 26%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.08) 14%, transparent 26%);
 }
 
 a.glass-card:hover,
@@ -764,7 +770,7 @@ button.glass-card:hover {
 
 /* ——— Sidebar: brighter white glass ——— */
 .glass-sidebar {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(214, 233, 250, 0.84) 100%) !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.68) 0%, rgba(214, 233, 250, 0.62) 100%) !important;
   border-right: 1px solid rgba(255, 255, 255, 0.8) !important;
   box-shadow:
     10px 0 36px rgba(70, 110, 160, 0.15),
