@@ -2,7 +2,7 @@ import { Circle } from 'lucide-react'
 
 function RecentActivity({ activities, onViewAll }) {
   return (
-    <section className="bg-bg-card border border-border rounded-card p-5">
+    <section className="glass-card rounded-card p-5">
       <div className="flex items-center justify-between mb-4">
         <h2 className="font-semibold text-text-primary">Recent Activity</h2>
         <button onClick={onViewAll} className="text-sm font-medium text-accent-primary">

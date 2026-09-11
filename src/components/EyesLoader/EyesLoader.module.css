@@ -5,7 +5,7 @@
   width: 100vw;
   height: 100vh;
   height: 100dvh;
-  background: #0F0A07;
+  background: var(--loader-bg-deep);
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -18,7 +18,7 @@
   content: '';
   position: absolute;
   inset: 0;
-    background: radial-gradient(ellipse 70% 65% at 50% 55%, transparent 0%, rgba(10,6,3,0.72) 100%);
+    background: radial-gradient(ellipse 70% 65% at 50% 55%, transparent 0%, var(--loader-vignette) 100%);
   pointer-events: none;
   z-index: 1;
 }
@@ -29,7 +29,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: #B5541E;
+  background: var(--accent-primary);
   opacity: 0.6;
   z-index: 2;
 }

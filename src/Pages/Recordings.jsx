@@ -257,7 +257,7 @@ const RecordingsPage = () => {
           
           <div className="p-6">
             <h3 className="text-white text-xl font-semibold mb-2">{video.title}</h3>
-            <p className="text-gray-400 text-sm mb-4">
+            <p className="text-text-secondary text-sm mb-4">
               {video.date} • {video.duration} • {video.size}
             </p>
           </div>
@@ -288,7 +288,7 @@ const RecordingsPage = () => {
   storageStats.percentage = (storageStats.used / storageStats.total) * 100;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 p-4 md:p-8">
+    <div className="min-h-screen bg-bg-primary p-4 md:p-8">
       {playingVideo && (
         <VideoPlayerModal 
           video={playingVideo} 
@@ -299,10 +299,10 @@ const RecordingsPage = () => {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
+          <h1 className="text-3xl md:text-4xl font-bold text-text-primary mb-2">
             Recent Recordings
           </h1>
-          <p className="text-gray-600">
+          <p className="text-text-secondary">
             View and manage your location history recordings from Cloudinary
           </p>
           {backendStatus === 'disconnected' && (
@@ -318,7 +318,7 @@ const RecordingsPage = () => {
           {/* Main Content - 2/3 width */}
           <div className="lg:col-span-2">
             {/* Action Bar */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 mb-6">
+            <div className="glass-card rounded-2xl shadow-sm p-4 mb-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
                   <div className="flex items-center">
@@ -327,9 +327,9 @@ const RecordingsPage = () => {
                       id="selectAll"
                       checked={selectedItems.length === recordings.length && recordings.length > 0}
                       onChange={handleSelectAll}
-                      className="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                      className="h-5 w-5 text-blue-600 rounded border-border focus:ring-blue-500"
                     />
-                    <label htmlFor="selectAll" className="ml-2 text-gray-700">
+                    <label htmlFor="selectAll" className="ml-2 text-text-primary">
                       {selectedItems.length > 0 
                         ? `${selectedItems.length} selected` 
                         : 'Select all'}
@@ -376,7 +376,7 @@ const RecordingsPage = () => {
                   <select
                     value={sortBy}
                     onChange={handleSortChange}
-                    className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="px-3 py-2 bg-bg-secondary border border-border rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="recent">Most Recent</option>
                     <option value="oldest">Oldest First</option>
@@ -384,10 +384,10 @@ const RecordingsPage = () => {
                     <option value="name">Name (A-Z)</option>
                   </select>
 
-                  <div className="flex items-center bg-gray-50 rounded-lg p-1">
+                  <div className="flex items-center bg-bg-secondary rounded-lg p-1">
                     <button
                       onClick={() => setViewMode('list')}
-                      className={`p-2 rounded ${viewMode === 'list' ? 'bg-white shadow-sm' : 'hover:bg-gray-100'}`}
+                      className={`p-2 rounded ${viewMode === 'list' ? 'bg-bg-secondary shadow-sm' : 'hover:bg-bg-secondary'}`}
                     >
                       <div className="w-5 h-5 flex flex-col justify-between">
                         <div className="h-0.5 w-full bg-gray-600"></div>
@@ -397,7 +397,7 @@ const RecordingsPage = () => {
                     </button>
                     <button
                       onClick={() => setViewMode('grid')}
-                      className={`p-2 rounded ${viewMode === 'grid' ? 'bg-white shadow-sm' : 'hover:bg-gray-100'}`}
+                      className={`p-2 rounded ${viewMode === 'grid' ? 'bg-bg-secondary shadow-sm' : 'hover:bg-bg-secondary'}`}
                     >
                       <div className="w-5 h-5 grid grid-cols-2 gap-0.5">
                         <div className="bg-gray-600 rounded-sm"></div>
@@ -426,20 +426,20 @@ const RecordingsPage = () => {
 
             {/* Loading State */}
             {loading && (
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-12 text-center">
+              <div className="glass-card rounded-2xl shadow-sm p-12 text-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                <p className="text-gray-600">Loading videos from Cloudinary...</p>
+                <p className="text-text-secondary">Loading videos from Cloudinary...</p>
               </div>
             )}
 
             {/* Recordings List */}
             {!loading && !error && (
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+              <div className="glass-card rounded-2xl shadow-sm overflow-hidden">
                 {recordings.length === 0 ? (
                   <div className="p-12 text-center">
-                    <Film size={48} className="mx-auto mb-4 text-gray-400" />
-                    <h3 className="text-xl font-semibold text-gray-800 mb-2">No videos found</h3>
-                    <p className="text-gray-600 mb-4">Upload videos to your netra_sarthi_videos folder in Cloudinary</p>
+                    <Film size={48} className="mx-auto mb-4 text-text-secondary" />
+                    <h3 className="text-xl font-semibold text-text-primary mb-2">No videos found</h3>
+                    <p className="text-text-secondary mb-4">Upload videos to your netra_sarthi_videos folder in Cloudinary</p>
                     <a 
                       href="https://console.cloudinary.com" 
                       target="_blank" 
@@ -453,7 +453,7 @@ const RecordingsPage = () => {
                   recordings.map((recording) => (
                     <div
                       key={recording.id}
-                      className={`flex items-center p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors ${
+                      className={`flex items-center p-4 border-b border-border hover:bg-bg-secondary transition-colors ${
                         selectedItems.includes(recording.id) ? 'bg-blue-50' : ''
                       }`}
                     >
@@ -463,7 +463,7 @@ const RecordingsPage = () => {
                           type="checkbox"
                           checked={selectedItems.includes(recording.id)}
                           onChange={() => handleSelect(recording.id)}
-                          className="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                          className="h-5 w-5 text-blue-600 rounded border-border focus:ring-blue-500"
                         />
                       </div>
 
@@ -492,15 +492,15 @@ const RecordingsPage = () => {
                       {/* Recording Info */}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between mb-1">
-                          <h3 className="text-lg font-semibold text-gray-800 truncate">
+                          <h3 className="text-lg font-semibold text-text-primary truncate">
                             {recording.title}
                           </h3>
-                          <span className="text-sm font-medium text-gray-700 bg-gray-100 px-2 py-1 rounded">
+                          <span className="text-sm font-medium text-text-primary bg-bg-secondary px-2 py-1 rounded">
                             {recording.size}
                           </span>
                         </div>
                         
-                        <div className="flex items-center gap-4 text-sm text-gray-500">
+                        <div className="flex items-center gap-4 text-sm text-text-secondary">
                           <span className="flex items-center gap-1">
                             <Clock size={14} />
                             {recording.timeAgo}
@@ -527,7 +527,7 @@ const RecordingsPage = () => {
                         </button>
                         <button
                           onClick={() => handleDownload(recording)}
-                          className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                          className="p-2 text-text-secondary hover:bg-bg-secondary rounded-lg transition-colors"
                           title="Download"
                         >
                           <Download size={20} />
@@ -539,7 +539,7 @@ const RecordingsPage = () => {
                         >
                           <Trash2 size={20} />
                         </button>
-                        <button className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                        <button className="p-2 text-text-secondary hover:bg-bg-secondary rounded-lg transition-colors">
                           <MoreVertical size={20} />
                         </button>
                       </div>
@@ -553,28 +553,28 @@ const RecordingsPage = () => {
           {/* Sidebar - 1/3 width */}
           <div className="lg:col-span-1">
             {/* Storage Stats */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mb-6">
+            <div className="glass-card rounded-2xl shadow-sm p-6 mb-6">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
                   <HardDrive size={24} className="text-white" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-800">Storage</h3>
-                  <p className="text-sm text-gray-600">Cloudinary Storage</p>
+                  <h3 className="text-lg font-semibold text-text-primary">Storage</h3>
+                  <p className="text-sm text-text-secondary">Cloudinary Storage</p>
                 </div>
               </div>
 
               {/* Progress Bar */}
               <div className="mb-4">
                 <div className="flex justify-between text-sm mb-2">
-                  <span className="text-gray-700 font-medium">
+                  <span className="text-text-primary font-medium">
                     {storageStats.used.toFixed(1)} MB
                   </span>
-                  <span className="text-gray-500">
+                  <span className="text-text-secondary">
                     {(storageStats.total / 1024).toFixed(1)} GB total
                   </span>
                 </div>
-                <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
+                <div className="h-3 bg-bg-secondary rounded-full overflow-hidden">
                   <div
                     className="h-full bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full transition-all duration-500"
                     style={{ width: `${Math.min(storageStats.percentage, 100)}%` }}
@@ -582,36 +582,36 @@ const RecordingsPage = () => {
                 </div>
               </div>
 
-              <div className="text-sm text-gray-600">
+              <div className="text-sm text-text-secondary">
                 <p className="mb-2">
                   <span className="font-medium">{storageStats.percentage.toFixed(1)}%</span> of storage used
                 </p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-text-secondary">
                   {(storageStats.total - storageStats.used).toFixed(1)} MB available
                 </p>
               </div>
             </div>
 
             {/* Quick Stats */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-              <h4 className="font-semibold text-gray-800 mb-4">Quick Stats</h4>
+            <div className="glass-card rounded-2xl shadow-sm p-6">
+              <h4 className="font-semibold text-text-primary mb-4">Quick Stats</h4>
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Total Videos</span>
-                  <span className="font-semibold text-gray-800">{recordings.length}</span>
+                  <span className="text-text-secondary">Total Videos</span>
+                  <span className="font-semibold text-text-primary">{recordings.length}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Total Size</span>
-                  <span className="font-semibold text-gray-800">{storageStats.used.toFixed(1)} MB</span>
+                  <span className="text-text-secondary">Total Size</span>
+                  <span className="font-semibold text-text-primary">{storageStats.used.toFixed(1)} MB</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Average Duration</span>
-                  <span className="font-semibold text-gray-800">
+                  <span className="text-text-secondary">Average Duration</span>
+                  <span className="font-semibold text-text-primary">
                     {recordings.length > 0 ? recordings[0].duration : '00:00'}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Last 24 hours</span>
+                  <span className="text-text-secondary">Last 24 hours</span>
                   <span className="font-semibold text-green-600">
                     {recordings.filter(r => r.timeAgo.includes('min') || r.timeAgo.includes('hour')).length}
                   </span>

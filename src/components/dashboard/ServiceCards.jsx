@@ -8,7 +8,7 @@ function ServiceCards({ services }) {
         <Link
           key={path}
           to={path}
-          className="bg-bg-card border border-border rounded-card p-5 flex flex-col gap-3 hover:border-accent-primary focus:outline-none focus:ring-2 focus:ring-accent-primary transition-colors"
+          className="glass-card rounded-card p-5 flex flex-col gap-3 hover:border-accent-primary focus:outline-none focus:ring-2 focus:ring-accent-primary transition-colors"
         >
           <div className="w-10 h-10 rounded-card bg-accent-light flex items-center justify-center text-accent-primary">
             <Icon size={20} />
