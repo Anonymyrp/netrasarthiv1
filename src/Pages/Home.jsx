@@ -1,8 +1,19 @@
-import { Radio, MapPin, Video, Bell, ArrowRight } from 'lucide-react'
+import { Radio, MapPin, Video } from 'lucide-react'
 import WelcomeSection from '../components/dashboard/WelcomeSection'
 import ServiceCards from '../components/dashboard/ServiceCards'
 import CurrentLocation from '../components/dashboard/CurrentLocation'
 import RecentActivity from '../components/dashboard/RecentActivity'
+import DeviceConnectivity from '../components/dashboard/DeviceConnectivity'
+import FrequentPlaces from '../components/dashboard/FrequentPlaces'
+import SystemStatus from '../components/dashboard/SystemStatus'
+import {
+  mockUser,
+  mockCurrentLocation,
+  mockRecentActivity,
+  mockDeviceStatus,
+  mockFrequentPlaces,
+  mockSystemStatus,
+} from '../data/mockDashboardData'
 
 function Home() {
   const currentDate = new Date().toLocaleDateString('en-US', {
@@ -18,16 +29,10 @@ function Home() {
     { title: 'Recordings', description: 'Access and manage video recordings.', path: '/recordings', icon: Video },
   ]
 
-  const activities = [
-    { id: 1, title: 'Reached Home', timestamp: 'Today, 6:12 PM', note: 'At saved place' },
-    { id: 2, title: 'Visited Grocery Store', timestamp: 'Today, 4:45 PM', note: 'Routine visit' },
-    { id: 3, title: 'Left Office', timestamp: 'Today, 1:23 PM', note: 'On usual route' },
-  ]
-
   return (
     <div>
       <WelcomeSection
-        userName="Shreya"
+        userName={mockUser.name}
         currentDate={currentDate}
         supportingText="Here's what's happening right now."
         sideText="Stay connected. Support their journey."
@@ -35,31 +40,33 @@ function Home() {
 
       <ServiceCards services={services} />
 
-      <div className="grid grid-cols-3 gap-4 px-8 pb-8">
+      <div className="grid grid-cols-2 gap-4 px-8 pb-4">
+        <DeviceConnectivity {...mockDeviceStatus} />
+        <FrequentPlaces places={mockFrequentPlaces} onSelectPlace={() => {}} />
+      </div>
+
+      <div className="grid grid-cols-3 gap-4 px-8 pb-4">
         <CurrentLocation
-          status="active"
-          address="MG Road, Pune, Maharashtra"
-          accuracy={10}
-          updatedAt="2 mins ago"
+          status={mockCurrentLocation.status}
+          address={mockCurrentLocation.address}
+          accuracy={mockCurrentLocation.accuracy}
+          updatedAt={mockCurrentLocation.updatedAt}
           onViewMap={() => {}}
           onZoomIn={() => {}}
           onZoomOut={() => {}}
           onLocate={() => {}}
         />
 
-        <RecentActivity activities={activities} onViewAll={() => {}} />
+        <RecentActivity activities={mockRecentActivity} onViewAll={() => {}} />
       </div>
 
-      <section className="glass-alerts mx-8 mb-8 rounded-card p-4 flex items-center gap-4">
-        <div className="glass-icon w-10 h-10 rounded-full flex items-center justify-center shrink-0">
-          <Bell size={20} />
-        </div>
-        <div>
-          <p className="font-semibold text-text-primary">Smart Alerts</p>
-          <p className="text-sm text-text-secondary">Get notified when they reach or leave important places.</p>
-        </div>
-        <ArrowRight size={18} className="ml-auto text-accent-primary shrink-0" />
-      </section>
+      <div className="px-8 pb-8">
+        <SystemStatus
+          status={mockSystemStatus.status}
+          message={mockSystemStatus.message}
+          onManageAlerts={() => {}}
+        />
+      </div>
     </div>
   )
 }

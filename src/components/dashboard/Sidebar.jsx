@@ -27,7 +27,7 @@ function Sidebar({ userName, userTagline, onLogout }) {
   }
 
   return (
-    <aside className={`${isOpen ? 'w-64' : 'w-20'} glass-sidebar flex flex-col h-screen sticky top-0 transition-all duration-200`}>
+    <aside className="w-64 glass-sidebar flex flex-col h-screen sticky top-0 transition-all duration-200">
       <div className="p-6 pb-4 flex items-center gap-3">
         <div className="w-10 h-10 rounded-full bg-accent-primary text-white flex items-center justify-center font-semibold border border-white/20 shadow-[0_0_18px_rgba(47,128,255,0.45),inset_0_1px_0_rgba(255,255,255,0.25)]">
           NS

@@ -10,7 +10,7 @@ function DashboardLayout({ user, onLogout, onProfileClick, onNotificationClick, 
         userTagline={user?.tagline}
         onLogout={onLogout}
       />
-      <div className="flex-1 min-h-screen bg-transparent">
+      <div className="flex-1 min-w-0 min-h-screen bg-transparent">
         <TopHeader
           searchPlaceholder="Search locations, dates, or activities..."
           userName={user?.name}
