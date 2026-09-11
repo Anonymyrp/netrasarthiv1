@@ -2,7 +2,7 @@ import { Search, Bell, ChevronDown } from 'lucide-react'
 
 function TopHeader({ searchPlaceholder, userName, hasUnreadNotifications, onProfileClick, onNotificationClick }) {
   return (
-    <header className="flex items-center justify-between px-8 py-4 bg-bg-primary">
+    <header className="flex items-center justify-between px-8 py-4 bg-transparent">
       <div className="flex items-center gap-2 glass-card rounded-card px-4 py-2 w-96">
         <Search size={16} className="text-text-secondary" />
         <input

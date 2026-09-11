@@ -1,4 +1,4 @@
-import { Radio, MapPin, Video } from 'lucide-react'
+import { Radio, MapPin, Video, Bell, ArrowRight } from 'lucide-react'
 import WelcomeSection from '../components/dashboard/WelcomeSection'
 import ServiceCards from '../components/dashboard/ServiceCards'
 import CurrentLocation from '../components/dashboard/CurrentLocation'
@@ -49,6 +49,17 @@ function Home() {
 
         <RecentActivity activities={activities} onViewAll={() => {}} />
       </div>
+
+      <section className="mx-8 mb-8 glass-card rounded-card p-4 flex items-center gap-4">
+        <div className="w-10 h-10 rounded-full bg-accent-light flex items-center justify-center text-accent-primary">
+          <Bell size={20} />
+        </div>
+        <div>
+          <p className="font-semibold text-text-primary">Smart Alerts</p>
+          <p className="text-sm text-text-secondary">Get notified when they reach or leave important places.</p>
+        </div>
+        <ArrowRight size={18} className="ml-auto text-text-secondary" />
+      </section>
     </div>
   )
 }

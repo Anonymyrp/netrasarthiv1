@@ -18,17 +18,43 @@
 
 @layer base {
   body {
-    background: radial-gradient(circle at top left, #1E293B, #0B1220 60%);
     color: var(--color-text-primary);
     font-family: system-ui, -apple-system, sans-serif;
     min-height: 100vh;
+    background-color: #0b1220;
+    background-image:
+      radial-gradient(ellipse 70% 45% at 75% 6%, rgba(96, 165, 250, 0.35), transparent 60%),
+      radial-gradient(ellipse 55% 40% at 10% 20%, rgba(59, 130, 246, 0.22), transparent 60%),
+      linear-gradient(180deg, #0a1730 0%, #14315b 30%, #1d4a7e 48%, #274264 62%, #0b1220 82%);
+    background-attachment: fixed;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 620' preserveAspectRatio='xMidYMax slice'%3E%3Cellipse cx='1120' cy='110' rx='260' ry='150' fill='%2360a5fa' opacity='0.16'/%3E%3Cpath d='M0 420 L140 280 L260 380 L400 230 L540 380 L700 260 L860 400 L1020 270 L1180 390 L1330 300 L1440 380 L1440 620 L0 620 Z' fill='%23143555' opacity='0.6'/%3E%3Cpath d='M0 480 L120 360 L300 470 L470 340 L640 480 L820 370 L1000 490 L1170 380 L1330 480 L1440 420 L1440 620 L0 620 Z' fill='%230a1526' opacity='0.9'/%3E%3C/svg%3E") bottom center / cover no-repeat;
+  }
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse 90% 75% at 50% 40%, transparent 55%, rgba(2, 6, 17, 0.55) 100%);
+  }
+  #root {
+    position: relative;
+    z-index: 1;
   }
 }
 @layer components {
   .glass-card {
-    background: var(--color-bg-card);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--color-border);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05));
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15);
   }
 }

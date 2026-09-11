@@ -13,10 +13,10 @@ function RecentActivity({ activities, onViewAll }) {
       {activities.length === 0 ? (
         <p className="text-sm text-text-secondary">No recent activity yet.</p>
       ) : (
-        <ul className="flex flex-col gap-4">
+        <ul className="relative ml-1.5 flex flex-col gap-4 border-l border-border pl-6">
           {activities.map(({ id, title, timestamp, note }) => (
-            <li key={id} className="flex items-start gap-3">
-              <Circle size={10} className="text-accent-primary mt-1.5 fill-accent-primary" />
+            <li key={id} className="relative flex items-start gap-3">
+              <Circle size={10} className="absolute top-1.5 -left-[29px] text-accent-primary fill-accent-primary" />
               <div className="flex-1">
                 <p className="text-sm font-medium text-text-primary">{title}</p>
                 <p className="text-xs text-text-secondary">{timestamp}</p>

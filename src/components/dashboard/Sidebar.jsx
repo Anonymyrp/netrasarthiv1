@@ -50,7 +50,7 @@ function Sidebar({ userName, userTagline, onLogout }) {
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2.5 rounded-card text-sm font-medium transition-all duration-150 ${
                 isActive
-                  ? 'bg-accent-light text-accent-primary shadow-sm backdrop-blur-sm'
+                  ? 'bg-accent-primary text-white shadow-md'
                   : 'text-text-secondary hover:bg-bg-secondary hover:text-text-primary'
               }`
             }
