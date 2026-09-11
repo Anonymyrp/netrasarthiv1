@@ -49,12 +49,22 @@ export default function EyesLoader({ onComplete }) {
   }, []);
 
   useEffect(() => {
+    console.log('EyesLoader useEffect mounted', {
+      overlay: overlayRef.current,
+      svg: svgRef.current,
+      irisLeft: svgRef.current?.irisLeft,
+      goggles: svgRef.current?.goggles,
+      helmet: svgRef.current?.helmet
+    });
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       onComplete?.();
       return;
     }
     const svgEl = svgRef.current;
-    if (!overlayRef.current || !svgEl?.irisLeft || !svgEl?.irisRight || !svgEl?.goggles || !svgEl?.helmet) return;
+    if (!overlayRef.current || !svgEl?.irisLeft || !svgEl?.irisRight || !svgEl?.goggles || !svgEl?.helmet) {
+      console.warn('EyesLoader missing refs:', svgEl);
+      return;
+    }
     const handleTouchMove = (e) => {
       const touch = e.touches[0];
       handleMouseMove({ clientX: touch.clientX, clientY: touch.clientY });
