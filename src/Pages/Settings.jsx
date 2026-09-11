@@ -130,8 +130,8 @@ function Settings() {
               aria-current={activeTab === id ? 'page' : undefined}
               className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-card text-sm font-medium transition-all duration-150 active:scale-[0.98] border ${
                 activeTab === id
-                  ? 'bg-accent-primary text-white border-transparent shadow-[0_6px_18px_rgba(47,128,255,0.35)]'
-                  : 'text-text-secondary border-transparent hover:bg-[rgba(47,128,255,0.12)] hover:text-[#1D5FCC] hover:border-[rgba(47,128,255,0.3)] hover:shadow-[0_4px_14px_rgba(47,128,255,0.15)]'
+                  ? 'bg-accent-primary text-white border-transparent shadow-[0_6px_18px_rgba(51,104,160,0.35)]'
+                  : 'text-text-secondary border-transparent hover:bg-[rgba(51,104,160,0.12)] hover:text-[#3368A0] hover:border-[rgba(51,104,160,0.3)] hover:shadow-[0_4px_14px_rgba(51,104,160,0.15)]'
               }`}
             >
               <Icon size={18} className="shrink-0" />

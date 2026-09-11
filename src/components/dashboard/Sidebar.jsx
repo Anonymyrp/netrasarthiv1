@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import { Home, Radio, MapPin, Video, Bell, Settings, X, Menu } from 'lucide-react'
 import { useState } from 'react'
+import logo from '../../assets/logo.png'
 
 const navItems = [
   { label: 'Home', path: '/', icon: Home },
@@ -29,8 +30,13 @@ function Sidebar() {
   return (
     <aside className="w-64 glass-sidebar flex flex-col h-screen sticky top-0 transition-all duration-200">
       <div className="p-6 pb-4 flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-accent-primary text-white flex items-center justify-center font-semibold border border-white/20 shadow-[0_0_18px_rgba(47,128,255,0.45),inset_0_1px_0_rgba(255,255,255,0.25)]">
-          NS
+        <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 border border-white/20 shadow-[0_0_18px_rgba(51,104,160,0.45),inset_0_1px_0_rgba(255,255,255,0.25)]">
+          <img
+            src={logo}
+            alt="Netra Sarthi logo"
+            className="h-full w-full object-cover"
+            style={{ objectPosition: '50% 30%', transform: 'scale(2.2)' }}
+          />
         </div>
         <div className="flex-1">
           <p className="font-semibold text-text-primary">Netra Sarthi</p>
