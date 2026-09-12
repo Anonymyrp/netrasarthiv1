@@ -7,11 +7,6 @@ export default function LoadingScreen({ onComplete }) {
   const animRef = useRef(null)
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      onComplete?.()
-      return
-    }
-
     const NS = 'http://www.w3.org/2000/svg'
     const root = containerRef.current
     if (!root) return
