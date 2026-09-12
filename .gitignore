@@ -13,8 +13,8 @@ dist-ssr
 *.local
 
 # Environment variables & secrets (prototype deployment uses .env)
-!.env
-!.env.production
+.env
+!.env.example
 .env.*
 *.env
 *.env.*
