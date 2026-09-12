@@ -50,19 +50,24 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }))
 // Rate limiting for API endpoints
 app.use('/api', standardLimiter)
 
-// Mount API routes
-app.use('/api/health', healthRouter)
-app.use('/api/test', healthRouter) // Backward compatibility alias
-app.use('/api/auth', authRouter)
-app.use('/api/devices', devicesRouter)
-app.use('/api/locations', locationsRouter)
-app.use('/api/recordings', recordingsRouter)
-app.use('/api/cloudinary/videos', recordingsRouter) // Backward compatibility alias
-app.use('/api/alerts', alertsRouter)
-app.use('/api/activity', activityRouter)
-app.use('/api/places', placesRouter)
-app.use('/api/system', systemRouter)
-app.use('/api/settings', settingsRouter)
+// Mount API routes (supports both /api and direct serverless invocation)
+const mountRoutes = (prefix = '') => {
+  app.use(`${prefix}/health`, healthRouter)
+  app.use(`${prefix}/test`, healthRouter)
+  app.use(`${prefix}/auth`, authRouter)
+  app.use(`${prefix}/devices`, devicesRouter)
+  app.use(`${prefix}/locations`, locationsRouter)
+  app.use(`${prefix}/recordings`, recordingsRouter)
+  app.use(`${prefix}/cloudinary/videos`, recordingsRouter)
+  app.use(`${prefix}/alerts`, alertsRouter)
+  app.use(`${prefix}/activity`, activityRouter)
+  app.use(`${prefix}/places`, placesRouter)
+  app.use(`${prefix}/system`, systemRouter)
+  app.use(`${prefix}/settings`, settingsRouter)
+}
+
+mountRoutes('/api')
+mountRoutes('')
 
 // 404 handler for undefined routes
 app.use((req, res, next) => {
