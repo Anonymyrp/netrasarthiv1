@@ -50,6 +50,30 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }))
 // Rate limiting for API endpoints
 app.use('/api', standardLimiter)
 
+// Base API status / discovery endpoint
+app.get(['/', '/api'], (req, res) => {
+  res.json({
+    status: 'ok',
+    service: 'Netra Sarthi Backend API',
+    version: '1.0.0',
+    mode: config.nodeEnv,
+    integrations: {
+      firebase: config.firebase.isConfigured ? 'live' : 'mock',
+      cloudinary: config.cloudinary.isConfigured ? 'live' : 'mock',
+    },
+    endpoints: {
+      health: '/api/health',
+      auth: '/api/auth',
+      devices: '/api/devices',
+      locations: '/api/locations',
+      alerts: '/api/alerts',
+      settings: '/api/settings',
+      recordings: '/api/recordings',
+    },
+    timestamp: Math.floor(Date.now() / 1000),
+  })
+})
+
 // Mount API routes (supports both /api and direct serverless invocation)
 const mountRoutes = (prefix = '') => {
   app.use(`${prefix}/health`, healthRouter)
