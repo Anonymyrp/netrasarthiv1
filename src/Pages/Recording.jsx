@@ -19,7 +19,8 @@ const RecordingsPage = () => {
   const checkBackendConnection = async () => {
     try {
       setBackendStatus('checking');
-      const response = await fetch('https://netra-server-xy36.onrender.com/api/test');
+      const baseUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');
+      const response = await fetch(`${baseUrl}/test`);
       if (response.ok) {
         setBackendStatus('connected');
         fetchVideos();
@@ -42,7 +43,8 @@ const RecordingsPage = () => {
       setError(null);
       
       console.log('Fetching videos from backend...');
-      const response = await fetch('https://netra-server-xy36.onrender.com/api/cloudinary/videos');
+      const baseUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');
+      const response = await fetch(`${baseUrl}/recordings`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -51,28 +53,29 @@ const RecordingsPage = () => {
       const data = await response.json();
       console.log('Received data:', data);
       
-      if (data.success) {
-        const transformedRecordings = data.videos.map((video, index) => ({
-          id: video.public_id || index,
-          title: video.title || video.public_id?.split('/').pop().replace(/_/g, ' ') || 'Untitled Video',
-          timeAgo: getTimeAgo(new Date(video.created_at)),
-          size: formatBytes(video.bytes),
-          duration: formatDuration(video.duration),
-          date: new Date(video.created_at).toISOString().split('T')[0],
+      const recordingsData = data.recordings || data.videos || data;
+      
+      if (Array.isArray(recordingsData)) {
+        const transformedRecordings = recordingsData.map((video, index) => ({
+          id: video.id || video.public_id || index,
+          title: video.title || video.public_id?.split('/').pop()?.replace(/_/g, ' ') || 'Untitled Video',
+          timeAgo: getTimeAgo(new Date(video.created_at || video.createdAt || new Date())),
+          size: formatBytes(video.bytes || video.size || 0),
+          duration: formatDuration(video.duration || 0),
+          date: new Date(video.created_at || video.createdAt || new Date()).toISOString().split('T')[0],
           type: getVideoType(video.title),
           protected: false,
-          url: video.url,
-          thumbnail: video.thumbnail || video.url?.replace('/upload/', '/upload/w_400,h_300,c_fill/'),
-          publicId: video.public_id,
-          format: video.format,
-          createdAt: video.created_at
+          url: video.videoUrl || video.url || video.secure_url || '',
+          thumbnail: video.thumbnail || video.url?.replace('/upload/', '/upload/w_400,h_300,c_fill/') || '',
+          publicId: video.public_id || video.id,
+          format: video.format || 'mp4',
+          createdAt: video.created_at || video.createdAt || new Date()
         }));
         
-        // Sort recordings based on selected sort option
         const sorted = sortRecordings(transformedRecordings, sortBy);
         setRecordings(sorted);
       } else {
-        setError('Failed to load videos from Cloudinary');
+        setError('Failed to load videos from Cloudinary: invalid response format');
       }
     } catch (error) {
       console.error('Error fetching videos:', error);
@@ -194,7 +197,8 @@ const RecordingsPage = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this recording?')) {
       try {
-        const response = await fetch(`https://netra-server-xy36.onrender.com/api/cloudinary/videos/${id}`, {
+        const baseUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');
+        const response = await fetch(`${baseUrl}/recordings/${id}`, {
           method: 'DELETE'
         });
         
