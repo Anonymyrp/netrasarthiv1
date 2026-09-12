@@ -2,14 +2,18 @@ import { initializeApp, getApps } from "firebase/app";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAl4AIJlUFOApyYOxdZNHnL-6d64NDsi5c",
-  authDomain: "netra-sarthi-46868.firebaseapp.com",
-  databaseURL: "https://netra-sarthi-46868-default-rtdb.firebaseio.com/",
-  projectId: "netra-sarthi-46868",
-  storageBucket: "netra-sarthi-46868.appspot.com",
-  messagingSenderId: "479551899312617", // Your API key is the sender ID
-  appId: "1:479551899312617:web:your-app-id" // You can get this from Firebase Console
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "",
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL || "",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "",
 };
+
+if (!firebaseConfig.apiKey && import.meta.env.DEV) {
+  console.warn("[Firebase] Warning: VITE_FIREBASE_API_KEY is not defined in .env. Realtime client features may be restricted.");
+}
 
 // Initialize Firebase only once
 let app;

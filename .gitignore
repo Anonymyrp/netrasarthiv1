@@ -12,19 +12,25 @@ dist
 dist-ssr
 *.local
 
-# Firebase service-account keys must never be committed
+# Environment variables & secrets (Never commit!)
+.env
+.env.*
+*.env
+*.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+!.env.example
+
+# Certificates & Private Keys
+*.pem
+*.key
+*.crt
+*.pfx
 *-firebase-adminsdk-*.json
 firebase-adminsdk-*.json
+service-account*.json
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+powershell.cmd
 
-.env
