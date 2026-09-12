@@ -1,6 +1,6 @@
 function WelcomeSection({ userName, currentDate, supportingText, sideText }) {
   return (
-    <section className="flex flex-col sm:flex-row items-start justify-between gap-4 px-4 md:px-8 pt-2 pb-6">
+    <section className="flex flex-col sm:flex-row items-start justify-between gap-4 px-4 md:px-8 pt-0 pb-5">
       <div>
         <p className="text-sm text-text-secondary mb-1">{currentDate}</p>
         <h1 className="text-2xl font-bold tracking-tight text-text-primary">

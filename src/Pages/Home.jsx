@@ -3,15 +3,14 @@ import { Radio, MapPin, Video } from 'lucide-react'
 import WelcomeSection from '../components/dashboard/WelcomeSection'
 import ServiceCards from '../components/dashboard/ServiceCards'
 import CurrentLocation from '../components/dashboard/CurrentLocation'
-import RecentActivity from '../components/dashboard/RecentActivity'
 import DeviceConnectivity from '../components/dashboard/DeviceConnectivity'
 import FrequentPlaces from '../components/dashboard/FrequentPlaces'
 import SystemStatus from '../components/dashboard/SystemStatus'
 import HelmetPreviewCard from '../components/dashboard/HelmetPreviewCard'
+import DashboardSettingsCard from '../components/dashboard/DashboardSettingsCard'
 import {
   mockUser,
   mockCurrentLocation,
-  mockRecentActivity,
   mockDeviceStatus,
   mockFrequentPlaces,
   mockSystemStatus,
@@ -43,13 +42,7 @@ function Home() {
 
       <ServiceCards services={services} />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 md:px-8 pb-4 items-stretch">
-        <DeviceConnectivity {...mockDeviceStatus} />
-        <HelmetPreviewCard />
-        <FrequentPlaces places={mockFrequentPlaces} onSelectPlace={() => {}} />
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 px-4 md:px-8 pb-4">
+      <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-4 px-4 md:px-8 pb-5 items-stretch dashboard-primary-row">
         <CurrentLocation
           status={mockCurrentLocation.status}
           address={mockCurrentLocation.address}
@@ -60,8 +53,13 @@ function Home() {
           onZoomOut={() => {}}
           onLocate={() => {}}
         />
+        <HelmetPreviewCard />
+      </div>
 
-        <RecentActivity activities={mockRecentActivity} onViewAll={() => {}} />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[42fr_33fr_25fr] gap-4 px-4 md:px-8 pb-4 items-stretch dashboard-support-row">
+        <DeviceConnectivity {...mockDeviceStatus} />
+        <FrequentPlaces places={mockFrequentPlaces} onSelectPlace={() => {}} />
+        <DashboardSettingsCard />
       </div>
 
       <div className="px-4 md:px-8 pb-8">

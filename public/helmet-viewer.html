@@ -26,6 +26,20 @@
             box-sizing: border-box
         }
 
+        body.embed-preview #closeViewerBtn,
+        body.embed-preview header.hud,
+        body.embed-preview #mode,
+        body.embed-preview #hint,
+        body.embed-preview #dock,
+        body.embed-preview #titleblock,
+        body.embed-preview .corner,
+        body.embed-preview #chip,
+        body.embed-preview #toast,
+        body.embed-preview #drop,
+        body.embed-preview #intro {
+            display: none !important;
+        }
+
         html,
         body {
             height: 100%;
@@ -479,6 +493,11 @@
 </head>
 
 <body>
+    <script>
+        if (new URLSearchParams(window.location.search).get('embed') === 'preview') {
+            document.body.classList.add('embed-preview');
+        }
+    </script>
     <div id="app"></div>
 
     <header class="hud">
