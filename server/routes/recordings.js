@@ -9,6 +9,7 @@ const router = Router()
 router.get(
   '/',
   asyncHandler(async (req, res) => {
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private')
     const recordings = await cloudinaryService.listRecordings()
     res.json({ recordings })
   })
