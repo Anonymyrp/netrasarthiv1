@@ -1,0 +1,27 @@
+- generic [ref=f1e2]:
+  - button "SKIP →" [ref=f1e3] [cursor=pointer]
+  - generic [ref=f1e4]:
+    - generic [ref=f1e5]:
+      - generic [ref=f1e6]: "N"
+      - generic [ref=f1e7]: e
+      - generic [ref=f1e8]: t
+      - generic [ref=f1e9]: r
+      - generic [ref=f1e10]: a
+      - generic [ref=f1e11]: S
+      - generic [ref=f1e12]: a
+      - generic [ref=f1e13]: r
+      - generic [ref=f1e14]: t
+      - generic [ref=f1e15]: h
+      - generic [ref=f1e16]: i
+    - generic [ref=f1e17]: PROTOTYPE DEMONSTRATION
+    - img [ref=f1e19] [cursor=pointer]:
+      - generic [ref=f1e27]: NETRASARTHI — PROTOTYPE DEMONSTRATION — LOADING · NETRASARTHI — PROTOTYPE DEMONSTRATION — LOADING ·
+    - generic [ref=f1e59]:
+      - generic [ref=f1e60]:
+        - generic [ref=f1e61]:
+          - generic [ref=f1e62]: INITIALIZING CORE
+          - generic [ref=f1e63]: ·
+        - generic [ref=f1e64]: 0%
+      - generic [ref=f1e66]: MODULE 01 — CORE BOOT
+    - generic [ref=f1e67]: CLICK LENS — SWAP OPTIC / EYE
+  - generic: NETRASARTHI — PROTOTYPE DEMONSTRATION — LOADER 01
