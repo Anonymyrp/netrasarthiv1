@@ -19,8 +19,15 @@ import activityRouter from './routes/activity.js'
 import placesRouter from './routes/places.js'
 import systemRouter from './routes/system.js'
 import settingsRouter from './routes/settings.js'
+import { config } from './config/env.js'
 
 const app = express()
+
+// Trust reverse proxy (Cloudflare / Vercel)
+if (!config.isDev) {
+  app.set('trust proxy', 1)
+}
+
 
 // Security headers
 app.use(

@@ -7,6 +7,7 @@ import RecentActivity from '../components/dashboard/RecentActivity'
 import DeviceConnectivity from '../components/dashboard/DeviceConnectivity'
 import FrequentPlaces from '../components/dashboard/FrequentPlaces'
 import SystemStatus from '../components/dashboard/SystemStatus'
+import HelmetPreviewCard from '../components/dashboard/HelmetPreviewCard'
 import {
   mockUser,
   mockCurrentLocation,
@@ -42,8 +43,9 @@ function Home() {
 
       <ServiceCards services={services} />
 
-      <div className="grid grid-cols-2 gap-4 px-8 pb-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-8 pb-4 items-stretch">
         <DeviceConnectivity {...mockDeviceStatus} />
+        <HelmetPreviewCard />
         <FrequentPlaces places={mockFrequentPlaces} onSelectPlace={() => {}} />
       </div>
 

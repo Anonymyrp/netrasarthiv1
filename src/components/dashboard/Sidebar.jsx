@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { Home, Radio, MapPin, Video, Bell, Settings, X, Menu } from 'lucide-react'
+import { Home, Radio, MapPin, Video, Bell, Settings, X, Menu, Cpu } from 'lucide-react'
 import { useState } from 'react'
 import logo from '../../assets/logo.png'
 
@@ -8,6 +8,7 @@ const navItems = [
   { label: 'Live Location', path: '/live-location', icon: Radio },
   { label: 'Past Locations', path: '/past-locations', icon: MapPin },
   { label: 'Recordings', path: '/recordings', icon: Video },
+  { label: 'Connected Devices', path: '/connected-devices', icon: Cpu },
   { label: 'Alerts', path: '/alerts', icon: Bell },
   { label: 'Settings', path: '/settings', icon: Settings },
 ]

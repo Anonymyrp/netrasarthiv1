@@ -8,12 +8,12 @@ export const corsOptions = {
     }
 
     const allowedOrigins = [
-      config.clientUrl,
+      config.clientUrl, // resolves to https://yourdomain.com via CLIENT_URL env var
+      'https://www.yourdomain.com',
       'http://localhost:5173',
-      'http://localhost:3000',
     ]
 
-    if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+    if (allowedOrigins.includes(origin)) {
       callback(null, true)
     } else {
       callback(new Error(`CORS blocked for origin: ${origin}`))

@@ -1,0 +1,315 @@
+:root {
+    --ink: #10254e;
+    --dim: #3d5a8c;
+    --faint: #6782ae;
+    --hair: rgba(16, 37, 78, .22);
+    --accent: #2559c4;
+}
+
+.loaderOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    user-select: none;
+    background:
+        radial-gradient(1100px 700px at 18% 20%, rgba(255, 255, 255, .5), transparent 60%),
+        radial-gradient(900px 600px at 82% 16%, rgba(64, 104, 180, .9), transparent 62%),
+        radial-gradient(1200px 800px at 68% 90%, rgba(84, 124, 196, .85), transparent 60%),
+        linear-gradient(165deg, #a8c4ec 0%, #86a8de 55%, #7299d6 100%);
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fadeOut {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1.02);
+}
+
+/* drifting glass blobs */
+.blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(70px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.b1 {
+    width: 46vw;
+    height: 46vw;
+    left: -10vw;
+    top: -14vh;
+    background: radial-gradient(circle, rgba(255, 255, 255, .55), transparent 70%);
+    animation: drift1 26s ease-in-out infinite alternate;
+}
+
+.b2 {
+    width: 40vw;
+    height: 40vw;
+    right: -8vw;
+    top: 8vh;
+    background: radial-gradient(circle, rgba(52, 94, 172, .55), transparent 70%);
+    animation: drift2 31s ease-in-out infinite alternate;
+}
+
+.b3 {
+    width: 50vw;
+    height: 50vw;
+    left: 16vw;
+    bottom: -22vh;
+    background: radial-gradient(circle, rgba(72, 114, 188, .5), transparent 70%);
+    animation: drift1 36s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes drift1 {
+    to {
+        transform: translate(6vw, 4vh) scale(1.12);
+    }
+}
+
+@keyframes drift2 {
+    to {
+        transform: translate(-5vw, 6vh) scale(.92);
+    }
+}
+
+/* stage */
+.stage {
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+}
+
+.mark {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: .05em;
+}
+
+.mark span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: rise .7s cubic-bezier(.22, .9, .3, 1) forwards;
+}
+
+.mark span.dimLetter {
+    color: var(--dim);
+    font-weight: 500;
+}
+
+@keyframes rise {
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.sub2 {
+    margin-top: 10px;
+    font: 500 10px 'IBM Plex Mono', monospace;
+    letter-spacing: .4em;
+    color: var(--dim);
+}
+
+/* lens */
+.lensWrap {
+    position: relative;
+    margin: 34px 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lensWrap::before {
+    content: '';
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, .30), transparent 68%);
+    z-index: -1;
+}
+
+.lensSvg {
+    width: min(300px, 72vw);
+    height: auto;
+    display: block;
+    cursor: pointer;
+    animation: fadeIn .8s ease both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+}
+
+.tring {
+    font: 500 9px 'IBM Plex Mono', monospace;
+    fill: rgba(242, 248, 255, .72);
+    letter-spacing: 1.5px;
+}
+
+/* frosted glass load panel */
+.glass {
+    background: rgba(235, 244, 255, .48);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, .7);
+    border-radius: 12px;
+    box-shadow: 0 10px 34px rgba(22, 54, 120, .22), inset 0 1px 0 rgba(255, 255, 255, .8);
+}
+
+.load {
+    width: min(280px, 78vw);
+    padding: 13px 15px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font: 500 10px 'IBM Plex Mono', monospace;
+    letter-spacing: .16em;
+    color: var(--ink);
+}
+
+.st {
+    display: flex;
+    gap: 8px;
+}
+
+.dots {
+    color: var(--accent);
+}
+
+.bar {
+    margin-top: 10px;
+    height: 2px;
+    background: rgba(16, 37, 78, .25);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.barFill {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #16357e, #2559c4);
+    transition: width .25s linear;
+}
+
+.barReady .barFill {
+    background: #2559c4;
+    box-shadow: 0 0 10px rgba(37, 89, 196, .9);
+}
+
+.module {
+    margin-top: 9px;
+    font: 400 9px 'IBM Plex Mono', monospace;
+    letter-spacing: .2em;
+    color: var(--dim);
+}
+
+.hint {
+    margin-top: 16px;
+    font: 500 9px 'IBM Plex Mono', monospace;
+    letter-spacing: .22em;
+    color: var(--dim);
+}
+
+/* corners + foot */
+.corner {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    z-index: 9;
+    pointer-events: none;
+    opacity: .65;
+}
+
+.cTl {
+    top: 12px;
+    left: 12px;
+    border-top: 1px solid var(--hair);
+    border-left: 1px solid var(--hair);
+}
+
+.cTr {
+    top: 12px;
+    right: 12px;
+    border-top: 1px solid var(--hair);
+    border-right: 1px solid var(--hair);
+}
+
+.cBl {
+    bottom: 12px;
+    left: 12px;
+    border-bottom: 1px solid var(--hair);
+    border-left: 1px solid var(--hair);
+}
+
+.cBr {
+    bottom: 12px;
+    right: 12px;
+    border-bottom: 1px solid var(--hair);
+    border-right: 1px solid var(--hair);
+}
+
+.foot {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9;
+    font: 400 9px 'IBM Plex Mono', monospace;
+    letter-spacing: .24em;
+    color: var(--faint);
+    pointer-events: none;
+}
+
+.skipBtn {
+    position: fixed;
+    top: 16px;
+    right: 20px;
+    z-index: 20;
+    font: 500 10px 'IBM Plex Mono', monospace;
+    letter-spacing: .18em;
+    color: var(--ink);
+    background: rgba(235, 244, 255, .55);
+    border: 1px solid rgba(255, 255, 255, .75);
+    border-radius: 8px;
+    padding: 6px 14px;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    transition: all 0.2s ease;
+}
+
+.skipBtn:hover {
+    background: rgba(235, 244, 255, .85);
+    border-color: rgba(37, 89, 196, .4);
+    transform: translateY(-1px);
+}
+
+@media(max-width:520px) {
+    .mark {
+        font-size: 22px;
+    }
+
+    .lensWrap::before {
+        width: 280px;
+        height: 280px;
+    }
+}

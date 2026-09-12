@@ -1,6 +1,14 @@
+import crypto from 'crypto'
 import { verifyAccessToken } from '../utils/jwt.js'
 import { UnauthorizedError, ForbiddenError } from '../utils/errors.js'
 import { config } from '../config/env.js'
+
+function safeCompare(a, b) {
+  if (!a || !b) return false
+  const bufA = Buffer.from(String(a))
+  const bufB = Buffer.from(String(b))
+  return bufA.length === bufB.length && crypto.timingSafeEqual(bufA, bufB)
+}
 
 export function authenticate(req, res, next) {
   // Check for Authorization header
@@ -47,8 +55,8 @@ export function authorize(...roles) {
 export function authenticateDevice(req, res, next) {
   const deviceKey = req.headers['x-device-key']
 
-  // If valid device API key provided
-  if (deviceKey && deviceKey === config.device.apiKey) {
+  // If valid device API key provided (timing safe comparison)
+  if (deviceKey && safeCompare(deviceKey, config.device.apiKey)) {
     req.isDevice = true
     req.deviceId = req.body?.deviceId || 'netra-helmet-01'
     return next()

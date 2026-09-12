@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NetraSarthi — Loading</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --ink: #10254e;
+            --dim: #3d5a8c;
+            --faint: #6782ae;
+            --hair: rgba(16, 37, 78, .22);
+            --accent: #2559c4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--ink);
+            -webkit-font-smoothing: antialiased;
+            user-select: none;
+            background:
+                radial-gradient(1100px 700px at 18% 20%, rgba(255, 255, 255, .5), transparent 60%),
+                radial-gradient(900px 600px at 82% 16%, rgba(64, 104, 180, .9), transparent 62%),
+                radial-gradient(1200px 800px at 68% 90%, rgba(84, 124, 196, .85), transparent 60%),
+                linear-gradient(165deg, #a8c4ec 0%, #86a8de 55%, #7299d6 100%);
+        }
+
+        /* drifting glass blobs behind everything */
+        .blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(70px);
+            pointer-events: none;
+            z-index: 0
+        }
+
+        .b1 {
+            width: 46vw;
+            height: 46vw;
+            left: -10vw;
+            top: -14vh;
+            background: radial-gradient(circle, rgba(255, 255, 255, .55), transparent 70%);
+            animation: drift1 26s ease-in-out infinite alternate
+        }
+
+        .b2 {
+            width: 40vw;
+            height: 40vw;
+            right: -8vw;
+            top: 8vh;
+            background: radial-gradient(circle, rgba(52, 94, 172, .55), transparent 70%);
+            animation: drift2 31s ease-in-out infinite alternate
+        }
+
+        .b3 {
+            width: 50vw;
+            height: 50vw;
+            left: 16vw;
+            bottom: -22vh;
+            background: radial-gradient(circle, rgba(72, 114, 188, .5), transparent 70%);
+            animation: drift1 36s ease-in-out infinite alternate-reverse
+        }
+
+        @keyframes drift1 {
+            to {
+                transform: translate(6vw, 4vh) scale(1.12)
+            }
+        }
+
+        @keyframes drift2 {
+            to {
+                transform: translate(-5vw, 6vh) scale(.92)
+            }
+        }
+
+        /* ---- stage ---- */
+        .stage {
+            position: fixed;
+            inset: 0;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+        }
+
+        .mark {
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: .05em
+        }
+
+        .mark span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(16px);
+            animation: rise .7s cubic-bezier(.22, .9, .3, 1) forwards
+        }
+
+        .mark span.d {
+            color: var(--dim);
+            font-weight: 500
+        }
+
+        @keyframes rise {
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        .sub2 {
+            margin-top: 10px;
+            font: 500 10px 'IBM Plex Mono', monospace;
+            letter-spacing: .4em;
+            color: var(--dim)
+        }
+
+        /* ---- lens ---- */
+        .lensWrap {
+            position: relative;
+            margin: 34px 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .lensWrap::before {
+            content: '';
+            position: absolute;
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, .30), transparent 68%);
+            z-index: -1
+        }
+
+        svg#lens {
+            width: min(300px, 72vw);
+            height: auto;
+            display: block;
+            animation: fadeIn .8s ease both
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0
+            }
+        }
+
+        .tring {
+            font: 500 9px 'IBM Plex Mono', monospace;
+            fill: rgba(242, 248, 255, .72);
+            letter-spacing: 1.5px
+        }
+
+        /* ---- load panel : frosted glass, same recipe as the exhibit ---- */
+        .glass {
+            background: rgba(235, 244, 255, .48);
+            backdrop-filter: blur(16px) saturate(160%);
+            -webkit-backdrop-filter: blur(16px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, .7);
+            border-radius: 12px;
+            box-shadow: 0 10px 34px rgba(22, 54, 120, .22), inset 0 1px 0 rgba(255, 255, 255, .8);
+        }
+
+        .load {
+            width: min(280px, 78vw);
+            padding: 13px 15px
+        }
+
+        .load .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font: 500 10px 'IBM Plex Mono', monospace;
+            letter-spacing: .16em;
+            color: var(--ink)
+        }
+
+        .load .row .st {
+            display: flex;
+            gap: 8px
+        }
+
+        .load #dots {
+            color: var(--accent)
+        }
+
+        .bar {
+            margin-top: 10px;
+            height: 2px;
+            background: rgba(16, 37, 78, .25);
+            border-radius: 2px;
+            overflow: hidden
+        }
+
+        .bar i {
+            display: block;
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #16357e, #2559c4);
+            transition: width .25s linear
+        }
+
+        .bar.rdy i {
+            background: #2559c4;
+            box-shadow: 0 0 10px rgba(37, 89, 196, .9)
+        }
+
+        .module {
+            margin-top: 9px;
+            font: 400 9px 'IBM Plex Mono', monospace;
+            letter-spacing: .2em;
+            color: var(--dim)
+        }
+
+        .hint {
+            margin-top: 16px;
+            font: 500 9px 'IBM Plex Mono', monospace;
+            letter-spacing: .22em;
+            color: var(--dim)
+        }
+
+        /* ---- corners + foot ---- */
+        .corner {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            z-index: 9;
+            pointer-events: none;
+            opacity: .65
+        }
+
+        .c-tl {
+            top: 12px;
+            left: 12px;
+            border-top: 1px solid var(--hair);
+            border-left: 1px solid var(--hair)
+        }
+
+        .c-tr {
+            top: 12px;
+            right: 12px;
+            border-top: 1px solid var(--hair);
+            border-right: 1px solid var(--hair)
+        }
+
+        .c-bl {
+            bottom: 12px;
+            left: 12px;
+            border-bottom: 1px solid var(--hair);
+            border-left: 1px solid var(--hair)
+        }
+
+        .c-br {
+            bottom: 12px;
+            right: 12px;
+            border-bottom: 1px solid var(--hair);
+            border-right: 1px solid var(--hair)
+        }
+
+        .foot {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9;
+            font: 400 9px 'IBM Plex Mono', monospace;
+            letter-spacing: .24em;
+            color: var(--faint);
+            pointer-events: none
+        }
+
+        svg#lens {
+            cursor: pointer
+        }
+
+        @media(max-width:520px) {
+            .mark {
+                font-size: 22px
+            }
+
+            .lensWrap::before {
+                width: 280px;
+                height: 280px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+
+    <div class="stage">
+        <div class="mark" id="mark"></div>
+        <div class="sub2">PROTOTYPE DEMONSTRATION</div>
+
+        <div class="lensWrap">
+            <svg id="lens" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <radialGradient id="glassGrad" cx="42%" cy="38%" r="78%">
+                        <stop offset="0%" stop-color="#dfe9f8" />
+                        <stop offset="45%" stop-color="#8fb0e0" />
+                        <stop offset="100%" stop-color="#33589e" />
+                    </radialGradient>
+                    <clipPath id="housingClip">
+                        <circle cx="150" cy="150" r="80" />
+                    </clipPath>
+                    <path id="tcirc" d="M 150 54 A 96 96 0 1 1 149.99 54" />
+                </defs>
+
+                <!-- outer bezel -->
+                <circle cx="150" cy="150" r="138" fill="none" stroke="#10254e" stroke-width="3" opacity=".85" />
+                <circle cx="150" cy="150" r="131" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="1" />
+
+                <!-- focus ticks (staggered in) -->
+                <g id="ticks"></g>
+
+                <!-- counter-rotating rings -->
+                <g id="dashedRing">
+                    <circle cx="150" cy="150" r="112" fill="none" stroke="#f2f8ff" stroke-opacity=".5"
+                        stroke-width="1.5" stroke-dasharray="2 7" />
+                </g>
+                <g id="dottedRing">
+                    <circle cx="150" cy="150" r="104" fill="none" stroke="#2559c4" stroke-opacity=".85"
+                        stroke-width="2.4" stroke-dasharray="0.1 9" stroke-linecap="round" />
+                </g>
+                <g id="textRing">
+                    <text class="tring">
+                        <textPath id="tpath" href="#tcirc" textLength="600" lengthAdjust="spacingAndGlyphs"></textPath>
+                    </text>
+                </g>
+
+                <!-- barrel housing -->
+                <circle cx="150" cy="150" r="84" fill="#0e2044" />
+                <circle cx="150" cy="150" r="84" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="1.4" />
+
+                <!-- inside the housing : content, then blades on top -->
+                <g clip-path="url(#housingClip)">
+                    <g id="glass">
+                        <circle cx="150" cy="150" r="66" fill="url(#glassGrad)" />
+                        <circle cx="150" cy="150" r="66" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="1" />
+                        <circle cx="150" cy="150" r="44" fill="none" stroke="rgba(255,255,255,.14)" />
+                        <circle cx="150" cy="150" r="26" fill="none" stroke="rgba(255,255,255,.10)" />
+                        <g id="glare">
+                            <ellipse cx="132" cy="128" rx="17" ry="8" fill="#ffffff" opacity=".4"
+                                transform="rotate(-32 132 128)" />
+                            <circle cx="164" cy="166" r="4" fill="#ffffff" opacity=".25" />
+                        </g>
+                    </g>
+                    <g id="eyeG" style="display:none">
+                        <g id="eyePixels" shape-rendering="crispEdges"></g>
+                    </g>
+                    <g id="blades"></g>
+                    <g id="bladeLines"></g>
+                </g>
+
+                <!-- inner rim -->
+                <circle cx="150" cy="150" r="80" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" />
+
+                <!-- radar pings -->
+                <g id="ping"></g>
+            </svg>
+        </div>
+
+        <div class="load glass">
+            <div class="row"><span class="st"><span id="status">INITIALIZING CORE</span><span
+                        id="dots"></span></span><span id="pct">0%</span></div>
+            <div class="bar" id="bar"><i id="fill"></i></div>
+            <div class="module" id="module">MODULE 01 — CORE BOOT</div>
+        </div>
+        <div class="hint">CLICK LENS — SWAP OPTIC / EYE</div>
+    </div>
+
+    <div class="corner c-tl"></div>
+    <div class="corner c-tr"></div>
+    <div class="corner c-bl"></div>
+    <div class="corner c-br"></div>
+    <div class="foot">NETRASARTHI — PROTOTYPE DEMONSTRATION — LOADER 01</div>
+
+    <script>
+        /* ================= tiny tween engine (anime.js-style easings) ================= */
+        const tweens = new Set();
+        const linear = p => p;
+        const easeOutCubic = p => 1 - Math.pow(1 - p, 3);
+        const easeInCubic = p => p * p * p;
+        const easeOutBack = p => { const c = 1.70158; return 1 + (c + 1) * Math.pow(p - 1, 3) + c * Math.pow(p - 1, 2); };
+        function tween(cfg) {
+            cfg.start = performance.now() + (cfg.delay || 0);
+            cfg.ease = cfg.ease || easeOutCubic;
+            tweens.add(cfg); return cfg;
+        }
+        function stepTweens(nowMs) {
+            for (const tw of [...tweens]) {
+                const p = (nowMs - tw.start) / tw.dur;
+                if (p < 0) continue;
+                if (p >= 1) { tw.update && tw.update(tw.to); tweens.delete(tw); tw.done && tw.done(); }
+                else { tw.update && tw.update(tw.from + (tw.to - tw.from) * tw.ease(p)); }
+            }
+        }
+
+        /* ================= build the lens ================= */
+        const NS = 'http://www.w3.org/2000/svg';
+        const $ = s => document.getElementById(s);
+        const rot = a => `rotate(${((a % 360) + 360) % 360} 150 150)`;
+
+        /* wordmark letters, staggered */
+        (() => {
+            const m = $('mark'); let html = '';
+            'NetraSarthi'.split('').forEach((ch, i) => {
+                html += `<span${i >= 5 ? ' class="d"' : ''} style="animation-delay:${120 + i * 45}ms">${ch}</span>`;
+            });
+            m.innerHTML = html;
+        })();
+
+        /* circumference caption */
+        (() => {
+            const s = 'NETRASARTHI — PROTOTYPE DEMONSTRATION — LOADING · ';
+            $('tpath').textContent = s + s;
+        })();
+
+        /* focus ticks — 72, staggered pop-in with back easing */
+        const ticks = [];
+        (() => {
+            const g = $('ticks');
+            for (let i = 0; i < 72; i++) {
+                const major = i % 6 === 0;
+                const len = major ? 11 : 5;
+                const line = document.createElementNS(NS, 'line');
+                line.setAttribute('x1', 150); line.setAttribute('x2', 150);
+                line.setAttribute('y1', 12); line.setAttribute('y2', 12);          // grows downward
+                line.setAttribute('stroke', i % 18 === 0 ? '#2559c4' : (major ? 'rgba(242,248,255,.9)' : 'rgba(242,248,255,.35)'));
+                line.setAttribute('stroke-width', major ? 2 : 1.2);
+                line.setAttribute('opacity', 0);
+                const holder = document.createElementNS(NS, 'g');
+                holder.setAttribute('transform', `rotate(${i * 5} 150 150)`);
+                holder.appendChild(line); g.appendChild(holder);
+                ticks.push({ line, len });
+                tween({
+                    from: 0, to: 1, dur: 700, delay: 260 + i * 12, ease: easeOutBack, update: v => {
+                        line.setAttribute('y2', (12 + len * Math.max(0, v)).toFixed(2));
+                        line.setAttribute('opacity', Math.min(1, Math.max(0, v * 1.4)).toFixed(2));
+                    }
+                });
+            }
+        })();
+
+        /* 8-blade aperture — blade circles slide outward to open, iris twists as it moves */
+        const bladeFills = [], bladeLines = [];
+        (() => {
+            for (let k = 0; k < 8; k++) {
+                const c = document.createElementNS(NS, 'circle');
+                c.setAttribute('r', 52); c.setAttribute('fill', k % 2 ? '#142e63' : '#132a5c');
+                $('blades').appendChild(c); bladeFills.push(c);
+                const s = document.createElementNS(NS, 'circle');
+                s.setAttribute('r', 52); s.setAttribute('fill', 'none');
+                s.setAttribute('stroke', 'rgba(242,248,255,.13)'); s.setAttribute('stroke-width', '1.2');
+                $('bladeLines').appendChild(s); bladeLines.push(s);
+            }
+        })();
+        function layoutBlades(o, twist) {
+            const d = 30 + o * 76;                        // 0 = closed, 1 = wide
+            for (let k = 0; k < 8; k++) {
+                const a = twist + k * Math.PI / 4;
+                const cx = (150 + Math.cos(a) * d).toFixed(2);
+                const cy = (150 + Math.sin(a) * d).toFixed(2);
+                bladeFills[k].setAttribute('cx', cx); bladeFills[k].setAttribute('cy', cy);
+                bladeLines[k].setAttribute('cx', cx); bladeLines[k].setAttribute('cy', cy);
+            }
+        }
+
+        /* radar ping */
+        function ping(strong) {
+            const to = strong ? 175 : 150, o0 = strong ? .8 : .5;
+            const c = document.createElementNS(NS, 'circle');
+            c.setAttribute('cx', 150); c.setAttribute('cy', 150); c.setAttribute('r', 40);
+            c.setAttribute('fill', 'none');
+            c.setAttribute('stroke', strong ? '#f2f8ff' : '#bcd4f4');
+            c.setAttribute('stroke-width', strong ? 2 : 1.4);
+            $('ping').appendChild(c);
+            tween({
+                from: 40, to, dur: strong ? 1300 : 1100, ease: easeOutCubic, update: v => {
+                    c.setAttribute('r', v.toFixed(1));
+                    c.setAttribute('opacity', (o0 * (1 - (v - 40) / (to - 40))).toFixed(3));
+                }, done: () => c.remove()
+            });
+        }
+
+        /* ================= pixel eye ================= */
+        const eye = { level: 0, px: 0, py: 0, tx: 0, ty: 0, dirty: true, blinking: false };
+        const CELL = 7, COLS = 15, ROWS = 9, CXc = 7, CYc = 4;
+        function renderEye() {
+            let s = '';
+            for (let y = 0; y < ROWS; y++) {
+                if (eye.level === 3 && y !== CYc) continue;                                   // blink line
+                if (eye.level === 2 && Math.abs(y - CYc) > 1) continue;
+                if (eye.level === 1 && Math.abs(y - CYc) > 3) continue;
+                const ty = (y - CYc) / 5;
+                const w = Math.round(7.2 * Math.sqrt(Math.max(0, 1 - ty * ty)));               // almond
+                for (let x = 0; x < COLS; x++) {
+                    const dx = x - CXc, dy = y - CYc;
+                    if (Math.abs(dx) > w) continue;
+                    let fill;
+                    if (eye.level === 3) { fill = '#16357e'; }
+                    else {
+                        const ex = dx - eye.px, ey = dy - eye.py;
+                        const r = Math.sqrt(ex * ex + ey * ey * 1.15);
+                        if (ex === -2 && ey === -2) fill = '#ffffff';                          // glint
+                        else if (r < 1.7) fill = '#0b1c3f';                          // pupil
+                        else if (r < 3.4) fill = ((x + y) & 1) ? '#3a6cc9' : '#4d7cd9';  // dithered iris
+                        else if (Math.abs(dx) > w - 1) fill = '#d7e4f6';                         // sclera shade
+                        else fill = '#f2f8ff';                         // sclera
+                    }
+                    s += `<rect x="${150 + dx * CELL - 3.5}" y="${150 + dy * CELL - 3.5}" width="${CELL}" height="${CELL}" fill="${fill}"/>`;
+                }
+            }
+            $('eyePixels').innerHTML = s;
+        }
+        function setEyeLevel(lv) { if (lv !== eye.level) { eye.level = lv; eye.dirty = true; } }
+        function eyeBlink() {                                     // stepped pixel blink
+            if (eye.blinking) return; eye.blinking = true;
+            tween({
+                from: 0, to: 1, dur: 420, ease: linear, update: e => {
+                    setEyeLevel([0, 1, 2, 3, 3, 2, 1, 0][Math.min(7, Math.floor(e * 8))]);
+                }, done: () => { setEyeLevel(0); eye.blinking = false; }
+            });
+        }
+
+        /* ================= state machine ================= */
+        const state = { mode: 'lens', trans: false, modeT: 0, oVal: 0, oBusy: false };
+        function apertureTo(to, dur, ease, cb) {
+            state.oBusy = true;
+            tween({
+                from: state.oVal, to, dur, ease, update: v => state.oVal = v,
+                done: () => { state.oBusy = false; cb && cb(); }
+            });
+        }
+        function transitionMode() {
+            if (state.trans) return; state.trans = true;
+            apertureTo(0, 300, easeInCubic, () => {                 // shutter closes = blink
+                state.mode = state.mode === 'lens' ? 'eye' : 'lens';
+                state.modeT = now;
+                $('glass').style.display = state.mode === 'lens' ? '' : 'none';
+                $('eyeG').style.display = state.mode === 'eye' ? '' : 'none';
+                if (state.mode === 'eye') { eye.level = -1; setEyeLevel(0); eye.px = eye.py = eye.tx = eye.ty = 0; eye.dirty = true; }
+                setTimeout(() => {
+                    ping(true);
+                    apertureTo(0.8, 560, easeOutCubic, () => { state.trans = false; });
+                }, 150);
+            });
+        }
+        $('lens').addEventListener('click', transitionMode);
+
+        /* ================= pointer : glare follows, eye looks ================= */
+        let mx = 0, my = 0, lastMouse = -9;
+        addEventListener('pointermove', e => {
+            mx = (e.clientX / innerWidth) * 2 - 1; my = (e.clientY / innerHeight) * 2 - 1;
+            lastMouse = now;
+            if (state.mode === 'eye' && !state.trans) {
+                eye.tx = Math.max(-3, Math.min(3, Math.round(mx * 3)));
+                eye.ty = Math.max(-2, Math.min(2, Math.round(my * 2)));
+            }
+        });
+
+        /* ================= fake loading ================= */
+        const STATUSES = [[0, 'INITIALIZING CORE'], [18, 'CALIBRATING OPTIC MODULE'], [38, 'LOADING SHADER CACHE'],
+        [58, 'ALIGNING APERTURE'], [78, 'SYNCING TELEMETRY'], [94, 'FINALIZING PASS']];
+        const MODULES = ['MODULE 01 — CORE BOOT', 'MODULE 02 — OPTIC CALIBRATION', 'MODULE 03 — SHADER CACHE',
+            'MODULE 04 — APERTURE ALIGN', 'MODULE 05 — TELEMETRY SYNC', 'MODULE 06 — FINAL CHECK'];
+        let pctTarget = 0, pctShown = 0, ready = false, readyT = 0;
+
+        /* ================= main loop ================= */
+        let now = 0, tPrev = 0;
+        let blinkTimer = 1.6, pingTimer = 1.2, progTimer = 0.6, pupilTimer = 0, lookTimer = 1.2;
+        const LOOKS = [[0, 0], [3, 0], [-2, 1], [2, -1], [-3, 0], [1, 1], [0, -1], [3, -1]];
+
+        function loop(ms) {
+            requestAnimationFrame(loop);
+            const t = ms / 1000, dt = Math.min(0.05, t - tPrev || 0.016);
+            tPrev = t; now = t;
+            stepTweens(ms);
+
+            /* continuous ring rotations — different speeds, opposite directions */
+            $('dashedRing').setAttribute('transform', rot(t * 8));
+            $('dottedRing').setAttribute('transform', rot(-t * 15));
+            $('textRing').setAttribute('transform', rot(t * 3.2));
+
+            /* aperture : breathing when idle, tween-driven during blinks/transitions */
+            if (!state.oBusy) {
+                const base = state.mode === 'eye' ? 0.8 : 0.78;
+                const amp = state.mode === 'eye' ? 0.018 : 0.03;
+                state.oVal = base + Math.sin(t * 1.15) * amp;
+            }
+            layoutBlades(state.oVal, t * 1.6 + (1 - state.oVal) * 46);   // iris twists as it closes
+
+            /* glass glare parallax */
+            $('glare').setAttribute('transform', `translate(${(mx * 5).toFixed(1)} ${(my * 5).toFixed(1)})`);
+
+            /* eye : stepped pupil tracking + idle glances + render when dirty */
+            if (state.mode === 'eye') {
+                pupilTimer -= dt;
+                if (pupilTimer <= 0) {
+                    pupilTimer = 0.15;
+                    if (eye.px !== eye.tx) { eye.px += Math.sign(eye.tx - eye.px); eye.dirty = true; }
+                    if (eye.py !== eye.ty) { eye.py += Math.sign(eye.ty - eye.py); eye.dirty = true; }
+                }
+                lookTimer -= dt;
+                if (lookTimer <= 0) {
+                    lookTimer = 1.4 + Math.random() * 1.2;
+                    if (now - lastMouse > 2.5) { const L = LOOKS[(Math.random() * LOOKS.length) | 0]; eye.tx = L[0]; eye.ty = L[1]; }
+                }
+                blinkTimer -= dt;
+                if (blinkTimer <= 0) { blinkTimer = 1.4 + Math.random() * 1.1; eyeBlink(); }
+                if (eye.dirty) { eye.dirty = false; renderEye(); }
+            } else {
+                blinkTimer = 1.2;
+            }
+
+            /* auto alternation : lens ~5.4s, eye ~5.4s */
+            if (!state.trans && now - state.modeT > 5.4) transitionMode();
+
+            /* pings */
+            pingTimer -= dt;
+            if (pingTimer <= 0) { pingTimer = 2.7; ping(false); }
+
+            /* progress */
+            progTimer -= dt;
+            if (progTimer <= 0) {
+                progTimer = 0.35 + Math.random() * 0.45;
+                if (pctTarget < 100) pctTarget = Math.min(100, pctTarget + 2 + Math.random() * 6);
+            }
+            pctShown += (pctTarget - pctShown) * Math.min(1, dt * 4);
+            $('pct').textContent = Math.round(pctShown) + '%';
+            $('fill').style.width = pctShown.toFixed(1) + '%';
+            if (pctTarget >= 100 && !ready) {
+                ready = true; readyT = t; ping(true);
+                $('bar').classList.add('rdy');
+                $('status').textContent = 'READY — STARTING DEMO';
+            }
+            if (ready && t - readyT > 2.6) {
+                ready = false; pctTarget = 0; pctShown = 0;
+                $('bar').classList.remove('rdy');
+            }
+            let st = 'INITIALIZING CORE';
+            for (const [th, txt] of STATUSES) if (pctShown >= th) st = txt;
+            if (!ready) $('status').textContent = st;
+            $('module').textContent = MODULES[Math.min(5, Math.floor(pctShown / 100 * 6))];
+            $('dots').textContent = '·'.repeat(1 + Math.floor(t / 0.4) % 3);
+        }
+        requestAnimationFrame(loop);
+
+        /* intro : aperture opens, first ping */
+        setTimeout(() => apertureTo(0.8, 1000, easeOutCubic), 500);
+        setTimeout(() => ping(true), 1600);
+    </script>
+</body>
+
+</html>

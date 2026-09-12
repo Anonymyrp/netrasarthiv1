@@ -226,7 +226,17 @@ router.post(
   '/logout-all',
   authenticate,
   asyncHandler(async (req, res) => {
-    store.activeRefreshTokens.clear()
+    const userId = req.user.uid
+    for (const token of store.activeRefreshTokens) {
+      try {
+        const decoded = verifyRefreshToken(token)
+        if (decoded.uid === userId) {
+          store.activeRefreshTokens.delete(token)
+        }
+      } catch {
+        store.activeRefreshTokens.delete(token)
+      }
+    }
     res.json({ success: true, message: 'Logged out from all devices' })
   })
 )
