@@ -36,7 +36,7 @@ export function useLiveLocation() {
     // Establish SSE stream
     try {
       const token = localStorage.getItem('ns_access_token')
-      const baseUrl = apiClient.defaults.baseURL || 'http://localhost:5000/api'
+      const baseUrl = apiClient.defaults.baseURL || '/api'
       const streamUrl = `${baseUrl}/locations/live/stream${token ? `?token=${token}` : ''}`
 
       eventSource = new EventSource(streamUrl)

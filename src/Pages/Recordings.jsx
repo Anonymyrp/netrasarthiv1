@@ -12,7 +12,7 @@ function Recordings() {
     try {
       setLoading(true);
       setError(null);
-      const baseUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');
+      const baseUrl = import.meta.env.VITE_API_URL || '/api';
       const response = await fetch(`${baseUrl}/recordings`, { cache: 'no-store' });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
