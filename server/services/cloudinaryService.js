@@ -31,7 +31,7 @@ export const cloudinaryService = {
     if (cloudinary) {
       try {
         const result = await cloudinary.search
-          .expression('folder:netra_sarthi_videos AND resource_type:video')
+          .expression('resource_type:video')
           .sort_by('created_at', 'desc')
           .max_results(50)
           .execute()
