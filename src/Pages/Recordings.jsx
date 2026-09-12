@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import RecordingCard from '../components/recordings/RecordingCard';
 import StorageStats from '../components/recordings/StorageStats';
+import VideoPlayerModal from '../components/recordings/VideoPlayerModal';
 import { RefreshCw, Film } from 'lucide-react';
 
 function Recordings() {
   const [recordings, setRecordings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedVideo, setSelectedVideo] = useState(null);
 
   const fetchRecordings = async () => {
     try {
@@ -35,6 +37,13 @@ function Recordings() {
 
   return (
     <div className="px-4 md:px-8 pt-4 pb-6 flex flex-col gap-4">
+      {selectedVideo && (
+        <VideoPlayerModal
+          video={selectedVideo}
+          onClose={() => setSelectedVideo(null)}
+        />
+      )}
+
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
         <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {loading ? (
@@ -59,7 +68,7 @@ function Recordings() {
                 duration={recording.duration || '0:00'}
                 size={recording.size || '0 MB'}
                 thumbnail={recording.thumbnail || null}
-                onPlay={() => window.open(recording.videoUrl || recording.url || '#', '_blank')}
+                onPlay={() => setSelectedVideo(recording)}
               />
             ))
           )}
@@ -78,3 +87,4 @@ function Recordings() {
 }
 
 export default Recordings;
+
