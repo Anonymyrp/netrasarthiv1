@@ -1,14 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { X, Download, ExternalLink, Clock, HardDrive, AlertCircle, RotateCcw, Play, Pause } from 'lucide-react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { X, Download, ExternalLink, Clock, HardDrive, RotateCcw, Play, Pause, Volume2, VolumeX } from 'lucide-react';
 import JMuxer from 'jmuxer';
 
 export default function VideoPlayerModal({ video, onClose }) {
   const videoRef = useRef(null);
   const jmuxerRef = useRef(null);
   const [streamType, setStreamType] = useState('loading'); // 'loading' | 'mp4' | 'raw_h264'
-  const [statusMessage, setStatusMessage] = useState('Initializing stream...');
+  const [statusMessage, setStatusMessage] = useState('Analyzing stream format...');
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const rawBytesRef = useRef(null);
+  const isMseReadyRef = useRef(false);
 
   // Close on Escape key
   useEffect(() => {
@@ -19,6 +23,22 @@ export default function VideoPlayerModal({ video, onClose }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onClose]);
 
+  const feedH264Data = useCallback((bytes) => {
+    if (!jmuxerRef.current || !bytes || bytes.length === 0) return;
+    try {
+      jmuxerRef.current.feed({ video: bytes });
+      setStatusMessage('');
+      if (videoRef.current) {
+        videoRef.current.currentTime = 0;
+        videoRef.current.play().catch(() => {
+          // Autoplay may be deferred until user interaction
+        });
+      }
+    } catch (feedErr) {
+      console.warn('JMuxer feed error:', feedErr);
+    }
+  }, []);
+
   useEffect(() => {
     let isMounted = true;
     const videoUrl = video?.videoUrl || video?.url;
@@ -26,9 +46,9 @@ export default function VideoPlayerModal({ video, onClose }) {
 
     const initPlayer = async () => {
       try {
-        setStatusMessage('Inspecting stream format...');
+        setStatusMessage('Inspecting stream container...');
 
-        // Fast probe: check first 64 bytes for MP4 ftyp container box
+        // Fetch first 64 bytes to detect MP4 ftyp container box
         const probeRes = await fetch(videoUrl, { headers: { Range: 'bytes=0-63' } });
         const probeBuf = new Uint8Array(await probeRes.arrayBuffer());
 
@@ -62,31 +82,42 @@ export default function VideoPlayerModal({ video, onClose }) {
 
           if (!videoRef.current) return;
 
+          isMseReadyRef.current = false;
+
+          // CRITICAL: flushingTime must be > 0 and clearBuffer: false so cancelDelay()
+          // does not seek to the end of the static recording!
           const jmuxer = new JMuxer({
             node: videoRef.current,
             mode: 'video',
-            flushingTime: 0,
+            flushingTime: 1000,
+            clearBuffer: false,
+            maxDelay: 10000000,
             fps: 25,
             debug: false,
+            onReady: () => {
+              isMseReadyRef.current = true;
+              if (rawBytesRef.current && isMounted) {
+                feedH264Data(rawBytesRef.current);
+              }
+            },
+            onError: (err) => console.warn('JMuxer MSE warning:', err),
           });
           jmuxerRef.current = jmuxer;
 
-          // Fetch video payload and feed into JMuxer MSE buffer
+          // Fetch video payload
           const fullRes = await fetch(videoUrl);
           const fullBuf = new Uint8Array(await fullRes.arrayBuffer());
           rawBytesRef.current = fullBuf;
 
           if (!isMounted) return;
 
-          jmuxer.feed({ video: fullBuf });
-          setStatusMessage('');
-
-          if (videoRef.current) {
-            videoRef.current.play().catch(() => {});
+          // If onReady already fired, feed immediately; otherwise onReady callback will feed
+          if (isMseReadyRef.current) {
+            feedH264Data(fullBuf);
           }
         }
       } catch (err) {
-        console.warn('Probe error, falling back to native player:', err);
+        console.warn('Playback probe fallback to native:', err);
         if (!isMounted) return;
         setStreamType('mp4');
         setStatusMessage('');
@@ -107,24 +138,32 @@ export default function VideoPlayerModal({ video, onClose }) {
         jmuxerRef.current = null;
       }
       rawBytesRef.current = null;
+      isMseReadyRef.current = false;
     };
-  }, [video]);
+  }, [video, feedH264Data]);
 
-  const handleReplayRaw = () => {
-    if (streamType === 'raw_h264' && rawBytesRef.current && jmuxerRef.current && videoRef.current) {
-      try {
-        jmuxerRef.current.destroy();
-      } catch (_) {}
+  const handleReplay = () => {
+    if (streamType === 'raw_h264' && rawBytesRef.current && videoRef.current) {
+      if (jmuxerRef.current) {
+        try {
+          jmuxerRef.current.destroy();
+        } catch (_) {}
+      }
+      isMseReadyRef.current = false;
       const jmuxer = new JMuxer({
         node: videoRef.current,
         mode: 'video',
-        flushingTime: 0,
+        flushingTime: 1000,
+        clearBuffer: false,
+        maxDelay: 10000000,
         fps: 25,
         debug: false,
+        onReady: () => {
+          isMseReadyRef.current = true;
+          feedH264Data(rawBytesRef.current);
+        },
       });
       jmuxerRef.current = jmuxer;
-      jmuxer.feed({ video: rawBytesRef.current });
-      videoRef.current.play().catch(() => {});
     } else if (videoRef.current) {
       videoRef.current.currentTime = 0;
       videoRef.current.play().catch(() => {});
@@ -140,6 +179,27 @@ export default function VideoPlayerModal({ video, onClose }) {
       videoRef.current.pause();
       setIsPlaying(false);
     }
+  };
+
+  const toggleMute = () => {
+    if (!videoRef.current) return;
+    videoRef.current.muted = !isMuted;
+    setIsMuted(!isMuted);
+  };
+
+  const handleTimeUpdate = () => {
+    if (!videoRef.current) return;
+    setCurrentTime(videoRef.current.currentTime);
+    if (!isNaN(videoRef.current.duration) && videoRef.current.duration > 0) {
+      setDuration(videoRef.current.duration);
+    }
+  };
+
+  const formatSecs = (sec) => {
+    if (!sec || isNaN(sec)) return '0:00';
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return `${m}:${s.toString().padStart(2, '0')}`;
   };
 
   if (!video) return null;
@@ -167,7 +227,7 @@ export default function VideoPlayerModal({ video, onClose }) {
               </h3>
               {streamType === 'raw_h264' && (
                 <span className="px-2 py-0.5 rounded text-[10px] font-mono tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                  H.264 Remuxed
+                  H.264 Hardware Remux
                 </span>
               )}
               {streamType === 'mp4' && (
@@ -188,15 +248,13 @@ export default function VideoPlayerModal({ video, onClose }) {
           </div>
 
           <div className="flex items-center gap-2 flex-shrink-0">
-            {streamType === 'raw_h264' && (
-              <button
-                onClick={handleReplayRaw}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-200 text-xs border border-emerald-500/40 transition-colors"
-                title="Replay from beginning"
-              >
-                <RotateCcw size={14} /> Replay
-              </button>
-            )}
+            <button
+              onClick={handleReplay}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-slate-200 text-xs transition-colors"
+              title="Replay from start"
+            >
+              <RotateCcw size={14} /> Replay
+            </button>
             {videoUrl && (
               <>
                 <a
@@ -205,7 +263,7 @@ export default function VideoPlayerModal({ video, onClose }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-slate-200 hover:text-white transition-colors"
-                  title="Download Video File"
+                  title="Download Raw Video"
                 >
                   <Download size={18} />
                 </a>
@@ -214,7 +272,7 @@ export default function VideoPlayerModal({ video, onClose }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-slate-200 hover:text-white transition-colors"
-                  title="Open in new tab"
+                  title="Open direct URL"
                 >
                   <ExternalLink size={18} />
                 </a>
@@ -223,7 +281,7 @@ export default function VideoPlayerModal({ video, onClose }) {
             <button
               onClick={onClose}
               className="p-2 rounded-lg bg-white/10 hover:bg-red-500/80 text-slate-200 hover:text-white transition-colors"
-              title="Close modal (Esc)"
+              title="Close (Esc)"
               aria-label="Close"
             >
               <X size={18} />
@@ -232,46 +290,72 @@ export default function VideoPlayerModal({ video, onClose }) {
         </div>
 
         {/* Video Player Container */}
-        <div className="relative aspect-video bg-black flex items-center justify-center overflow-hidden">
+        <div className="relative aspect-video bg-black flex items-center justify-center overflow-hidden group">
           <video
             ref={videoRef}
             poster={video.thumbnail || undefined}
             controls
             autoPlay
+            muted={isMuted}
             playsInline
             onPlay={() => setIsPlaying(true)}
             onPause={() => setIsPlaying(false)}
-            className="w-full h-full object-contain"
+            onTimeUpdate={handleTimeUpdate}
+            onClick={togglePlayPause}
+            className="w-full h-full object-contain cursor-pointer"
           />
 
-          {/* Loading or Status Overlay */}
+          {/* Centered Play overlay when paused */}
+          {!isPlaying && !statusMessage && (
+            <button
+              onClick={togglePlayPause}
+              className="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/40 transition-colors"
+              aria-label="Play"
+            >
+              <div className="w-16 h-16 rounded-full bg-blue-600/90 hover:bg-blue-600 flex items-center justify-center text-white shadow-lg transition-transform transform hover:scale-110">
+                <Play size={28} className="translate-x-0.5" />
+              </div>
+            </button>
+          )}
+
+          {/* Loading status overlay */}
           {statusMessage && (
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center text-white gap-3 pointer-events-none">
+            <div className="absolute inset-0 bg-black/70 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center text-white gap-3 pointer-events-none">
               <div className="w-8 h-8 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
               <p className="text-sm font-medium text-slate-200">{statusMessage}</p>
             </div>
           )}
         </div>
 
-        {/* Informational Sub-footer */}
-        <div className="px-5 py-2.5 bg-white/[0.03] border-t border-white/5 flex items-center justify-between text-xs text-slate-400">
-          <span>
-            {streamType === 'raw_h264'
-              ? 'Raw camera stream decoded using in-browser H.264 MSE remuxer.'
-              : 'Direct MP4 ISO BMFF container playback.'}
-          </span>
-          <div className="flex items-center gap-2">
+        {/* Informational Sub-footer with playback controls */}
+        <div className="px-5 py-3 bg-white/[0.03] border-t border-white/5 flex items-center justify-between text-xs text-slate-300">
+          <div className="flex items-center gap-3">
             <button
               onClick={togglePlayPause}
-              className="hover:text-white transition-colors flex items-center gap-1"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-white transition-colors"
             >
-              {isPlaying ? <Pause size={12} /> : <Play size={12} />} {isPlaying ? 'Pause' : 'Play'}
+              {isPlaying ? <Pause size={13} /> : <Play size={13} />}
+              {isPlaying ? 'Pause' : 'Play'}
             </button>
-            <span>•</span>
-            <button onClick={handleReplayRaw} className="hover:text-white transition-colors flex items-center gap-1">
-              <RotateCcw size={12} /> Restart
+
+            <button
+              onClick={toggleMute}
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-white transition-colors"
+            >
+              {isMuted ? <VolumeX size={13} /> : <Volume2 size={13} />}
+              {isMuted ? 'Unmute' : 'Muted'}
             </button>
+
+            <span className="font-mono text-slate-400">
+              {formatSecs(currentTime)} / {formatSecs(duration || (parseFloat(video.duration) * 60) || 10)}
+            </span>
           </div>
+
+          <span className="text-slate-400 hidden sm:inline">
+            {streamType === 'raw_h264'
+              ? 'Raw H.264 camera stream dynamically remuxed via MediaSource.'
+              : 'Progressive MP4 container stream.'}
+          </span>
         </div>
       </div>
     </div>
