@@ -8,7 +8,6 @@ const router = Router()
 // GET /api/recordings (also accessible at /api/cloudinary/videos for backward compatibility)
 router.get(
   '/',
-  authenticate,
   asyncHandler(async (req, res) => {
     const recordings = await cloudinaryService.listRecordings()
     res.json({ recordings })
@@ -18,7 +17,6 @@ router.get(
 // GET /api/recordings/storage
 router.get(
   '/storage',
-  authenticate,
   asyncHandler(async (req, res) => {
     const stats = await cloudinaryService.getStorageStats()
     res.json(stats)
