@@ -42,7 +42,7 @@ function TopHeader({ title, subtitle, userName, hasUnreadNotifications, onProfil
           </>
         )}
       </div>
-      <div className="flex items-center gap-2 md:gap-5 shrink-0">
+      <div className="flex items-center gap-3 md:gap-5 shrink-0">
         <div className="relative">
           <button
             onClick={toggleNotif}
@@ -57,7 +57,7 @@ function TopHeader({ title, subtitle, userName, hasUnreadNotifications, onProfil
           </button>
 
           {notifOpen && (
-            <div className="absolute right-0 mt-2 w-[calc(100vw-2rem)] max-w-[18rem] md:w-72 glass-card rounded-card p-2 z-30 shadow-2xl">
+            <div className="absolute right-0 md:right-0 mt-2 w-[calc(100vw-2rem)] max-w-[18rem] md:max-w-[22rem] md:w-72 glass-card rounded-card p-2 z-30 shadow-2xl">
               <p className="text-sm font-semibold text-text-primary px-3 py-2">Notifications</p>
               {alerts.length === 0 ? (
                 <p className="text-sm text-text-secondary px-3 py-2">No notifications yet.</p>
