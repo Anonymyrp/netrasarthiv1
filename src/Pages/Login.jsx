@@ -30,7 +30,7 @@ function Login() {
   }
 
   const fillDemoUser = () => {
-    setEmail('shreya@example.com')
+    setEmail('Guardian@example.com')
     setPassword('Password123')
     setError('')
   }
@@ -109,7 +109,7 @@ function Login() {
             className="text-xs text-accent-primary hover:underline flex items-center gap-1.5"
           >
             <Eye size={14} />
-            Auto-fill demo credentials (Shreya)
+            Auto-fill demo credentials (Guardian)
           </button>
 
           <p className="text-xs text-text-muted text-center">

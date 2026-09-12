@@ -17,7 +17,7 @@ function App() {
     return <LoadingScreen onComplete={() => setLoading(false)} />
   }
 
-  const user = { name: 'Shreya', tagline: 'Care creates freedom' }
+  const user = { name: 'Guardian', tagline: 'Care creates freedom' }
 
   return (
     <BrowserRouter>

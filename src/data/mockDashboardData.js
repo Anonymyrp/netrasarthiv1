@@ -1,5 +1,5 @@
 export const mockUser = {
-  name: 'Shreya',
+  name: 'Guardian',
   tagline: 'Care creates freedom',
 }
 
@@ -60,6 +60,6 @@ export const mockStorageStats = {
 
 export const mockAlerts = [
   { id: 1, type: 'battery', severity: 'warning', title: 'Low battery', message: 'Device battery dropped below 20%.', timestamp: 'Today, 3:10 PM', read: false },
-  { id: 2, type: 'zone', severity: 'success', title: 'Reached Home', message: 'Shreya reached the saved Home location.', timestamp: 'Today, 6:12 PM', read: true },
+  { id: 2, type: 'zone', severity: 'success', title: 'Reached Home', message: 'Guardian reached the saved Home location.', timestamp: 'Today, 6:12 PM', read: true },
   { id: 3, type: 'sync', severity: 'info', title: 'Device sync delayed', message: 'Last sync was 15 minutes ago.', timestamp: 'Today, 1:50 PM', read: false },
 ]

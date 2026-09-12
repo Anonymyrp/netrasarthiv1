@@ -168,7 +168,7 @@ router.get(
   asyncHandler(async (req, res) => {
     const user = store.users.find((u) => u.uid === req.user.uid) || {
       uid: req.user.uid,
-      name: req.user.name || 'Shreya',
+      name: req.user.name || 'Guardian',
       email: req.user.email,
       tagline: 'Care creates freedom',
       role: req.user.role || 'user',

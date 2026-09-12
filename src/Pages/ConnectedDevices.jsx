@@ -119,7 +119,7 @@ function ConnectedDevices() {
                 <Smartphone size={22} />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-semibold text-text-primary">Shreya&apos;s Phone</p>
+                <p className="font-semibold text-text-primary">Guardian&apos;s Phone</p>
                 <p className="text-xs text-text-secondary mt-0.5">Primary tracker · Android</p>
               </div>
               <span className="live-badge flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium text-text-secondary">

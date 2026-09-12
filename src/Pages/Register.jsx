@@ -60,7 +60,7 @@ function Register() {
                 required
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
-                placeholder="e.g. Shreya Sharma"
+                placeholder="e.g. Guardian Sharma"
                 className="bg-transparent outline-none text-sm text-text-primary placeholder:text-text-muted flex-1"
               />
             </div>

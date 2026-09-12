@@ -6,10 +6,10 @@ const initialPasswordHash = bcrypt.hashSync('Password123', 10)
 export const store = {
   users: [
     {
-      uid: 'usr_shreya_01',
-      email: 'shreya@example.com',
+      uid: 'usr_Guardian_01',
+      email: 'Guardian@example.com',
       passwordHash: initialPasswordHash,
-      name: 'Shreya',
+      name: 'Guardian',
       tagline: 'Care creates freedom',
       role: 'user',
       createdAt: new Date().toISOString(),
@@ -87,7 +87,7 @@ export const store = {
 
   alerts: [
     { id: 1, type: 'battery', severity: 'warning', title: 'Low battery', message: 'Device battery dropped below 20%.', timestamp: 'Today, 3:10 PM', read: false },
-    { id: 2, type: 'zone', severity: 'success', title: 'Reached Home', message: 'Shreya reached the saved Home location.', timestamp: 'Today, 6:12 PM', read: true },
+    { id: 2, type: 'zone', severity: 'success', title: 'Reached Home', message: 'Guardian reached the saved Home location.', timestamp: 'Today, 6:12 PM', read: true },
     { id: 3, type: 'sync', severity: 'info', title: 'Device sync delayed', message: 'Last sync was 15 minutes ago.', timestamp: 'Today, 1:50 PM', read: false },
   ],
 

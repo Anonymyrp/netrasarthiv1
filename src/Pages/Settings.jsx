@@ -247,7 +247,7 @@ function Settings() {
                 <Smartphone size={18} />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-text-primary">Shreya&apos;s Phone</p>
+                <p className="text-sm font-semibold text-text-primary">Guardian&apos;s Phone</p>
                 <p className="text-xs text-text-secondary mt-0.5">
                   {mockDeviceStatus.connected ? 'Connected' : 'Disconnected'} · {mockDeviceStatus.networkStatus} · Battery {mockDeviceStatus.battery}%
                 </p>
