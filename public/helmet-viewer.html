@@ -1168,7 +1168,7 @@
         document.getElementById('importBtn').onclick = () => fileInput.click();
         fileInput.onchange = () => { const f = fileInput.files[0]; if (f) importFile(f); fileInput.value = ''; };
         document.getElementById('resetBtn').onclick = () => {
-            setModel(placeholder, null); toast('PLACEHOLDER RESTORED');
+            loadDefaultModel(); toast('TACTICAL HELMET RESTORED');
         };
 
         async function importFile(f) {
@@ -1198,7 +1198,22 @@
         });
 
         /* ================= initial mount ================= */
-        setModel(placeholder, null);
+        function loadDefaultModel() {
+            loader.load(
+                '/glb/tactical_helmet_boom_mic.glb',
+                gltf => {
+                    setModel(gltf.scene, 'TACTICAL HELMET — BOOM MIC');
+                    document.getElementById('tbMat').textContent = 'KEVLAR / PA-12 / ALU';
+                },
+                undefined,
+                err => {
+                    console.warn('Could not load tactical helmet GLB, using procedural fallback:', err);
+                    setModel(placeholder, null);
+                }
+            );
+        }
+
+        loadDefaultModel();
 
         /* ================= intro sequence ================= */
         const introAnim = { active: false, t: 0, dur: 1.8, from: camera.position.clone(), to: new THREE.Vector3(2.35, 1.95, 3.4) };
