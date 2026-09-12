@@ -22,13 +22,13 @@ function PastLocations() {
   const selectedEntry = filteredEntries.find((entry) => entry.id === selectedId) || filteredEntries[0]
 
   return (
-    <div className="px-8 pt-4 pb-6 flex flex-col gap-4 h-[calc(100vh-88px)]">
+    <div className="px-4 md:px-8 pt-4 pb-6 flex flex-col gap-4 h-auto lg:h-[calc(100vh-88px)]">
       <div className="flex items-center">
         <LocationFilterTabs filters={filters} activeFilter={activeFilter} onChange={setActiveFilter} />
       </div>
 
-      <div className="grid grid-cols-3 gap-4 flex-1 min-h-0">
-        <div className="col-span-2 h-full">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-0">
+        <div className="lg:col-span-2 h-full">
           {selectedEntry ? (
             <LiveMap
               latitude={selectedEntry.latitude}

@@ -120,8 +120,8 @@ function Settings() {
   const meta = panelMeta[activeTab]
 
   return (
-    <div className="px-8 pt-4 pb-6 flex flex-col gap-5 w-full">
-      <div className="grid grid-cols-[280px_minmax(0,1fr)] gap-5 items-stretch">
+    <div className="px-4 md:px-8 pt-4 pb-6 flex flex-col gap-5 w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] gap-5 items-stretch">
         <nav className="glass-card rounded-card p-3 flex flex-col gap-1.5" aria-label="Settings sections">
           {tabs.map(({ id, label, icon: Icon }) => (
             <button

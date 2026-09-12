@@ -43,13 +43,13 @@ function Home() {
 
       <ServiceCards services={services} />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-8 pb-4 items-stretch">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 md:px-8 pb-4 items-stretch">
         <DeviceConnectivity {...mockDeviceStatus} />
         <HelmetPreviewCard />
         <FrequentPlaces places={mockFrequentPlaces} onSelectPlace={() => {}} />
       </div>
 
-      <div className="grid grid-cols-3 gap-4 px-8 pb-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 px-4 md:px-8 pb-4">
         <CurrentLocation
           status={mockCurrentLocation.status}
           address={mockCurrentLocation.address}
@@ -64,7 +64,7 @@ function Home() {
         <RecentActivity activities={mockRecentActivity} onViewAll={() => {}} />
       </div>
 
-      <div className="px-8 pb-8">
+      <div className="px-4 md:px-8 pb-8">
         <SystemStatus
           status={mockSystemStatus.status}
           message={mockSystemStatus.message}

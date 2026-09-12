@@ -31,7 +31,7 @@ function ConnectedDevices() {
   ]
 
   return (
-    <div className="px-8 py-6 flex flex-col gap-4 max-w-6xl mx-auto w-full">
+    <div className="px-4 md:px-8 py-6 flex flex-col gap-4 w-full">
       <div className="flex items-start justify-between gap-4">
         <div>
           <h1 className="text-xl font-semibold text-text-primary">Connected Devices</h1>
@@ -47,8 +47,8 @@ function ConnectedDevices() {
         </button>
       </div>
 
-      <div className="grid grid-cols-3 gap-4 items-start">
-        <div className="col-span-2 flex flex-col gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
+        <div className="lg:col-span-2 flex flex-col gap-4">
           {/* Device 1: Smart Helmet */}
           <section className="glass-card rounded-card p-6 border border-accent-primary/25 relative overflow-hidden">
             <div className="flex items-center gap-4">

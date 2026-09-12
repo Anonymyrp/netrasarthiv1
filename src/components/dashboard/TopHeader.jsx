@@ -33,7 +33,7 @@ function TopHeader({ title, subtitle, userName, hasUnreadNotifications, onProfil
   }
 
   return (
-    <header className="flex items-center justify-between gap-4 px-8 pt-6 pb-4 bg-transparent">
+    <header className="flex items-center justify-between gap-4 px-4 md:px-8 pt-6 pb-4 bg-transparent">
       <div className="min-w-0">
         {title && (
           <>
@@ -57,7 +57,7 @@ function TopHeader({ title, subtitle, userName, hasUnreadNotifications, onProfil
           </button>
 
           {notifOpen && (
-            <div className="absolute right-0 mt-2 w-80 glass-card rounded-card p-2 z-20">
+            <div className="absolute right-0 mt-2 w-[calc(100vw-2rem)] max-w-[22rem] md:w-80 glass-card rounded-card p-2 z-20">
               <p className="text-sm font-semibold text-text-primary px-3 py-2">Notifications</p>
               {alerts.length === 0 ? (
                 <p className="text-sm text-text-secondary px-3 py-2">No notifications yet.</p>

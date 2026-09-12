@@ -15,7 +15,7 @@ function DeviceConnectivity({ connected, battery, charging, networkStatus, gpsSt
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="flex flex-col gap-1">
           <Battery size={18} className="text-accent-primary" />
           <span className="text-sm font-medium text-text-primary">{battery}%</span>

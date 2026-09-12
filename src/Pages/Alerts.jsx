@@ -16,7 +16,7 @@ function Alerts() {
   }
 
   return (
-    <div className="px-8 pt-4 pb-6 flex flex-col gap-4">
+    <div className="px-4 md:px-8 pt-4 pb-6 flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <p className="text-sm text-text-secondary">
           {unreadCount > 0 ? `${unreadCount} unread notification${unreadCount === 1 ? '' : 's'}` : 'You are all caught up.'}

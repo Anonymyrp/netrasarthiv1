@@ -4,11 +4,11 @@ import { mockRecordings, mockStorageStats } from '../data/mockDashboardData'
 
 function Recordings() {
   return (
-    <div className="px-8 pt-4 pb-6 flex flex-col gap-4">
-      <div className="grid grid-cols-4 gap-4">
-        <div className="col-span-3 grid grid-cols-3 gap-4">
+    <div className="px-4 md:px-8 pt-4 pb-6 flex flex-col gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+        <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {mockRecordings.length === 0 ? (
-            <p className="text-sm text-text-secondary col-span-3">No recordings available yet.</p>
+            <p className="text-sm text-text-secondary sm:col-span-2 lg:col-span-3">No recordings available yet.</p>
           ) : (
             mockRecordings.map((recording) => (
               <RecordingCard
