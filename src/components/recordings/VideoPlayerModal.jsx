@@ -196,10 +196,19 @@ export default function VideoPlayerModal({ video, onClose }) {
   };
 
   const formatSecs = (sec) => {
-    if (!sec || isNaN(sec)) return '0:00';
+    if (!sec || isNaN(sec) || !isFinite(sec)) return '0:00';
     const m = Math.floor(sec / 60);
     const s = Math.floor(sec % 60);
     return `${m}:${s.toString().padStart(2, '0')}`;
+  };
+
+  const getTargetDuration = () => {
+    if (isFinite(duration) && duration > 0) return duration;
+    if (video?.duration && typeof video.duration === 'string' && video.duration.includes(':')) {
+      const parts = video.duration.split(':');
+      return (parseInt(parts[0], 10) || 0) * 60 + (parseInt(parts[1], 10) || 0);
+    }
+    return parseFloat(video?.duration) || 10;
   };
 
   if (!video) return null;
@@ -347,7 +356,7 @@ export default function VideoPlayerModal({ video, onClose }) {
             </button>
 
             <span className="font-mono text-slate-400">
-              {formatSecs(currentTime)} / {formatSecs(duration || (parseFloat(video.duration) * 60) || 10)}
+              {formatSecs(currentTime)} / {formatSecs(getTargetDuration())}
             </span>
           </div>
 
