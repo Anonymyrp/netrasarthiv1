@@ -158,9 +158,9 @@
     z-index: 50;
     display: flex;
     align-items: center;
-    gap: 2.75rem;
+    gap: 1.75rem;
     height: 88px;
-    padding: 0 3.65rem;
+    padding: 0 1.5rem;
     background: #F7F4ED;
     border-bottom: 1px solid #E5DFD3;
     box-shadow: 0 7px 20px rgba(96, 78, 60, 0.07);
@@ -238,6 +238,12 @@
     gap: 1.1rem;
     margin-left: auto;
     flex: 0 0 auto;
+  }
+
+  .dashboard-content .glass-card:hover {
+    border-color: rgba(185, 115, 85, 0.35);
+    box-shadow: 0 10px 26px rgba(62, 58, 56, 0.12);
+    transform: translateY(-3px);
   }
 
   .dashboard-nav {
@@ -810,6 +816,48 @@
   section {
     animation: fade-in-up 0.4s ease both;
   }
+
+  .dashboard-content .glass-card {
+    animation: fade-in-up 0.4s ease both;
+  }
+
+  .dashboard-section {
+    animation: fade-in-up 0.4s ease both;
+  }
+
+  .dashboard-primary-section {
+    animation-delay: 0.08s;
+  }
+
+  .dashboard-support-section {
+    animation-delay: 0.16s;
+  }
+
+  .dashboard-system-section {
+    animation-delay: 0.24s;
+  }
+
+  .dashboard-service-row > .glass-card,
+  .dashboard-primary-row > .glass-card,
+  .dashboard-support-row > .glass-card,
+  .dashboard-system-row > .glass-card {
+    animation: fade-in-up 0.4s ease both;
+  }
+
+  .dashboard-service-row > .glass-card:nth-child(2),
+  .dashboard-primary-row > .glass-card:nth-child(2),
+  .dashboard-support-row > .glass-card:nth-child(2) {
+    animation-delay: 0.08s;
+  }
+
+  .dashboard-service-row > .glass-card:nth-child(3),
+  .dashboard-support-row > .glass-card:nth-child(3) {
+    animation-delay: 0.16s;
+  }
+
+  .dashboard-system-row > .glass-card {
+    animation-delay: 0.24s;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -819,10 +867,17 @@
   .map-ring-inner,
   .dashboard-nav,
   .dashboard-header,
-  section {
+  section,
+  .dashboard-content .glass-card,
+  .dashboard-section,
+  .dashboard-service-row > .glass-card,
+  .dashboard-primary-row > .glass-card,
+  .dashboard-support-row > .glass-card,
+  .dashboard-system-row > .glass-card {
     animation: none !important;
   }
   a.glass-card:hover,
+  .dashboard-content .glass-card:hover,
   .dashboard-nav-link:hover,
   .btn-primary:hover {
     transform: none !important;

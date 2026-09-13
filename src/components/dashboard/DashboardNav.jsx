@@ -11,7 +11,6 @@ const navItems = [
   { label: 'Past Locations', path: '/past-locations', icon: MapPin },
   { label: 'Recordings', path: '/recordings', icon: Video },
   { label: 'Devices', path: '/connected-devices', icon: Cpu },
-  { label: 'Alerts', path: '/alerts', icon: Bell },
   { label: 'Settings', path: '/settings', icon: Settings },
 ]
 

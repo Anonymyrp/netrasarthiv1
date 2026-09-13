@@ -11,12 +11,6 @@ const liveIcon = L.divIcon({
 })
 
 const TILE_LAYERS = {
-  dark: {
-    label: 'Dark',
-    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
-    attribution:
-      'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
-  },
   light: {
     label: 'Light',
     url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -31,8 +25,6 @@ const TILE_LAYERS = {
   },
 }
 
-const VARIANTS = Object.keys(TILE_LAYERS)
-
 function Recenter({ latitude, longitude }) {
   const map = useMap()
   useEffect(() => {
@@ -41,9 +33,11 @@ function Recenter({ latitude, longitude }) {
   return null
 }
 
-function LiveMap({ latitude, longitude, accuracy = 10, zoom = 15, defaultVariant = 'satellite', routePoints = [] }) {
+function LiveMap({ latitude, longitude, accuracy = 10, zoom = 15, defaultVariant = 'light', routePoints = [], variants = ['light', 'satellite'] }) {
+  const availableVariants = variants.filter((variant) => TILE_LAYERS[variant])
+  const fallbackVariant = availableVariants[0] || 'light'
   const [variant, setVariant] = useState(
-    TILE_LAYERS[defaultVariant] ? defaultVariant : 'dark'
+    availableVariants.includes(defaultVariant) ? defaultVariant : fallbackVariant
   )
 
   const lat = Number(latitude)
@@ -89,7 +83,7 @@ function LiveMap({ latitude, longitude, accuracy = 10, zoom = 15, defaultVariant
         aria-label="Map style"
         className="absolute top-3 right-3 z-10 flex gap-1 p-1 rounded-card border border-border bg-[rgba(12,26,52,0.72)] backdrop-blur-md shadow-[0_4px_12px_rgba(2,6,16,0.35)]"
       >
-        {VARIANTS.map((key) => (
+        {availableVariants.length > 1 && availableVariants.map((key) => (
           <button
             key={key}
             onClick={() => setVariant(key)}
