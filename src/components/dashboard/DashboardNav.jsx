@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { Home, Radio, MapPin, Video, Bell, Settings, Cpu, MoreHorizontal } from 'lucide-react'
+import { Home, Radio, MapPin, Video, Bell, Settings, Cpu, MoreHorizontal, LogOut } from 'lucide-react'
 import logo from '../../assets/logo.png'
 import ProfileMenu from './ProfileMenu'
 import { mockAlerts } from '../../data/mockDashboardData'
@@ -70,7 +70,7 @@ function DashboardNav({ userName, hasUnreadNotifications, onNotificationClick, o
           </button>
 
           {notifOpen && (
-            <div className="dashboard-notification-menu glass-card rounded-card p-2 z-30 shadow-2xl">
+            <div className="dashboard-notification-menu glass-card rounded-card p-2 z-30 shadow-2xl" role="dialog" aria-label="Notifications">
               <p className="text-sm font-semibold text-text-primary px-3 py-2">Notifications</p>
               <ul className="flex flex-col gap-1 max-h-80 overflow-y-auto">
                 {alerts.slice(0, 6).map((alert) => (
@@ -139,6 +139,17 @@ function DashboardNav({ userName, hasUnreadNotifications, onNotificationClick, o
                 <span>{label}</span>
               </NavLink>
             ))}
+            <button
+              type="button"
+              className="dashboard-mobile-more-link dashboard-mobile-logout-link"
+              onClick={() => {
+                setMoreOpen(false)
+                onLogout?.()
+              }}
+            >
+              <LogOut size={17} />
+              <span>Logout</span>
+            </button>
           </div>
         )}
       </div>
