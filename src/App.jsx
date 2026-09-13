@@ -1,6 +1,4 @@
-import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import LoadingScreen from './components/LoadingScreen'
 import DashboardLayout from './Layout/DashboardLayout'
 import Home from './Pages/Home'
 import LiveLocation from './Pages/LiveLocation'
@@ -11,12 +9,6 @@ import Settings from './Pages/Settings'
 import ConnectedDevices from './Pages/ConnectedDevices'
 
 function App() {
-  const [loading, setLoading] = useState(true)
-
-  if (loading) {
-    return <LoadingScreen onComplete={() => setLoading(false)} />
-  }
-
   const user = { name: 'Guardian', tagline: 'Care creates freedom' }
 
   return (

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { MapContainer, TileLayer, Marker, Circle, useMap } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Circle, Polyline, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
@@ -13,15 +13,15 @@ const liveIcon = L.divIcon({
 const TILE_LAYERS = {
   dark: {
     label: 'Dark',
-    url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
     attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
   },
   light: {
     label: 'Light',
-    url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
   satellite: {
     label: 'Satellite',
@@ -41,12 +41,15 @@ function Recenter({ latitude, longitude }) {
   return null
 }
 
-function LiveMap({ latitude, longitude, accuracy = 10, zoom = 15, defaultVariant = 'satellite' }) {
+function LiveMap({ latitude, longitude, accuracy = 10, zoom = 15, defaultVariant = 'satellite', routePoints = [] }) {
   const [variant, setVariant] = useState(
     TILE_LAYERS[defaultVariant] ? defaultVariant : 'dark'
   )
 
-  if (typeof latitude !== 'number' || typeof longitude !== 'number') {
+  const lat = Number(latitude)
+  const lng = Number(longitude)
+
+  if (isNaN(lat) || isNaN(lng)) {
     return (
       <div className="glass-card rounded-card h-full min-h-64 flex items-center justify-center">
         <p className="text-sm text-text-secondary">Location unavailable</p>
@@ -59,20 +62,26 @@ function LiveMap({ latitude, longitude, accuracy = 10, zoom = 15, defaultVariant
   return (
     <div className="map-dark rounded-card overflow-hidden h-full min-h-64 w-full relative">
       <MapContainer
-        center={[latitude, longitude]}
+        center={[lat, lng]}
         zoom={zoom}
         scrollWheelZoom
         className="live-leaflet"
         style={{ height: '100%', width: '100%' }}
       >
         <TileLayer key={variant} attribution={layer.attribution} url={layer.url} />
+        {routePoints && routePoints.length > 1 && (
+          <Polyline
+            positions={routePoints}
+            pathOptions={{ color: '#2F80FF', weight: 4, opacity: 0.8 }}
+          />
+        )}
         <Circle
-          center={[latitude, longitude]}
+          center={[lat, lng]}
           radius={accuracy}
           pathOptions={{ color: '#2F80FF', weight: 1, opacity: 0.5, fillColor: '#2F80FF', fillOpacity: 0.12 }}
         />
-        <Marker position={[latitude, longitude]} icon={liveIcon} />
-        <Recenter latitude={latitude} longitude={longitude} />
+        <Marker position={[lat, lng]} icon={liveIcon} />
+        <Recenter latitude={lat} longitude={lng} />
       </MapContainer>
 
       <div
