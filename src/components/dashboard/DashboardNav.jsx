@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+<<<<<<< HEAD
 import { Home, Radio, MapPin, Video, Bell, Settings, Cpu } from 'lucide-react'
+=======
+import { Home, Radio, MapPin, Video, Bell, Settings, Cpu, MoreHorizontal } from 'lucide-react'
+>>>>>>> feat/updated-theme
 import logo from '../../assets/logo.png'
 import ProfileMenu from './ProfileMenu'
 import { mockAlerts } from '../../data/mockDashboardData'
@@ -17,6 +21,10 @@ const navItems = [
 
 function DashboardNav({ userName, hasUnreadNotifications, onNotificationClick, onLogout }) {
   const [notifOpen, setNotifOpen] = useState(false)
+<<<<<<< HEAD
+=======
+  const [moreOpen, setMoreOpen] = useState(false)
+>>>>>>> feat/updated-theme
   const [alerts, setAlerts] = useState(mockAlerts)
   const unreadCount = alerts.filter((alert) => !alert.read).length
   const showDot = hasUnreadNotifications || unreadCount > 0
@@ -101,6 +109,55 @@ function DashboardNav({ userName, hasUnreadNotifications, onNotificationClick, o
       {notifOpen && (
         <button aria-label="Close notifications" onClick={() => setNotifOpen(false)} className="fixed inset-0 z-10 cursor-default bg-transparent border-0 p-0" />
       )}
+
+      {/* Mobile Bottom Navigation (Hidden on desktop) */}
+      <div className="dashboard-mobile-nav" aria-label="Mobile dashboard navigation">
+        {navItems.slice(0, 4).map(({ label, path, icon: Icon }) => (
+          <NavLink
+            key={path}
+            to={path}
+            end={path === '/'}
+            className={({ isActive }) => `dashboard-mobile-nav-link${isActive ? ' is-active' : ''}`}
+          >
+            <Icon size={19} strokeWidth={2.2} />
+            <span>{label}</span>
+          </NavLink>
+        ))}
+
+        <button
+          type="button"
+          className={`dashboard-mobile-nav-link${moreOpen ? ' is-active' : ''}`}
+          aria-expanded={moreOpen}
+          onClick={() => setMoreOpen((previous) => !previous)}
+        >
+          <MoreHorizontal size={20} strokeWidth={2.2} />
+          <span>More</span>
+        </button>
+
+        {moreOpen && (
+          <>
+            <button
+              type="button"
+              aria-label="Close more menu"
+              onClick={() => setMoreOpen(false)}
+              className="fixed inset-0 z-30 cursor-default bg-black/20 border-0 p-0"
+            />
+            <div className="dashboard-mobile-more-menu z-40">
+              {navItems.slice(4).map(({ label, path, icon: Icon }) => (
+                <NavLink
+                  key={path}
+                  to={path}
+                  className="dashboard-mobile-more-link"
+                  onClick={() => setMoreOpen(false)}
+                >
+                  <Icon size={17} />
+                  <span>{label}</span>
+                </NavLink>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
     </nav>
   )
 }
