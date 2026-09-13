@@ -1,4 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
+import { ref, onValue } from 'firebase/database'
+import { db } from '../config/firebase'
 import apiClient from '../api/client'
 import {
   mockCurrentLocation,
@@ -12,28 +14,65 @@ import {
   mockSystemStatus,
 } from '../data/mockDashboardData'
 
-// Live location hook with SSE stream
+// Live location hook with Firebase RTDB + SSE stream + API fallback
 export function useLiveLocation() {
   const [location, setLocation] = useState(mockCurrentLocation)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    let isSubscribed = true
     let eventSource = null
 
+    // 1. Direct Firebase Realtime Database Listener
+    const liveRef = ref(db, 'live_location')
+    const unsubscribeFirebase = onValue(
+      liveRef,
+      (snapshot) => {
+        if (!isSubscribed) return
+        const val = snapshot.val()
+        if (val) {
+          const dev = val.device1 || val['netra-helmet-01'] || val['netra_sarthi_01'] || {}
+          const lat = dev.latitude !== undefined ? Number(dev.latitude) : (val.latitude !== undefined ? Number(val.latitude) : null)
+          const lng = dev.longitude !== undefined ? Number(dev.longitude) : (val.longitude !== undefined ? Number(val.longitude) : null)
+
+          if (lat !== null && lng !== null && !isNaN(lat) && !isNaN(lng) && lat !== 0 && lng !== 0) {
+            setLocation({
+              status: val.status || 'active',
+              latitude: lat,
+              longitude: lng,
+              address: dev.address || val.address || `Live Position (${lat.toFixed(4)}° N, ${lng.toFixed(4)}° E)`,
+              accuracy: Number(dev.accuracy || val.accuracy || 4),
+              updatedAt: val.updatedAt || new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              speed: Number(dev.speed || val.speed || 0),
+              battery: Number(dev.battery || val.battery || 85),
+            })
+            setLoading(false)
+            return
+          }
+        }
+      },
+      (err) => {
+        console.warn('Firebase RTDB hook warning:', err)
+      }
+    )
+
+    // 2. Fetch initial from API as fallback
     const fetchInitial = async () => {
       try {
         const { data } = await apiClient.get('/locations/live')
-        setLocation(data)
+        if (isSubscribed && data?.latitude && data?.longitude) {
+          setLocation(data)
+        }
       } catch (err) {
-        console.warn('Using cached mock location:', err.message)
+        console.warn('Using cached location:', err.message)
       } finally {
-        setLoading(false)
+        if (isSubscribed) setLoading(false)
       }
     }
 
     fetchInitial()
 
-    // Establish SSE stream
+    // 3. Establish SSE stream if available
     try {
       const token = localStorage.getItem('ns_access_token')
       const baseUrl = apiClient.defaults.baseURL || '/api'
@@ -43,14 +82,13 @@ export function useLiveLocation() {
       eventSource.addEventListener('location_update', (e) => {
         try {
           const updated = JSON.parse(e.data)
-          setLocation(updated)
+          if (isSubscribed && updated?.latitude) setLocation(updated)
         } catch (parseErr) {
           console.error('SSE parse error:', parseErr)
         }
       })
 
       eventSource.onerror = () => {
-        // SSE connection dropped, close gracefully
         if (eventSource) eventSource.close()
       }
     } catch (sseErr) {
@@ -58,6 +96,8 @@ export function useLiveLocation() {
     }
 
     return () => {
+      isSubscribed = false
+      unsubscribeFirebase()
       if (eventSource) eventSource.close()
     }
   }, [])
@@ -89,30 +129,90 @@ export function useDeviceStatus(deviceId = 'netra-helmet-01') {
   return { status, loading, refetch }
 }
 
-// Location history hook
+// Location history hook with Firebase RTDB + API fallback
 export function useLocationHistory(period = 'all', deviceId = 'netra-helmet-01') {
   const [entries, setEntries] = useState(mockLocationHistory)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const fetchHistory = async () => {
-      setLoading(true)
+    let isSubscribed = true
+
+    const historyRef = ref(db, 'location_history')
+    const unsubscribe = onValue(
+      historyRef,
+      (snapshot) => {
+        if (!isSubscribed) return
+        const val = snapshot.val()
+        if (val) {
+          const devVal = val[deviceId] || val.device1 || val
+          const raw = []
+          for (const [k, v] of Object.entries(devVal)) {
+            if (v && typeof v === 'object') {
+              const lat = Number(v.latitude ?? v.lat)
+              const lng = Number(v.longitude ?? v.lng ?? v.lon)
+              if (!isNaN(lat) && !isNaN(lng) && lat !== 0 && lng !== 0) {
+                raw.push({ id: k, ...v, latitude: lat, longitude: lng, rawTime: Number(v.timestamp || k) || 0 })
+              }
+            }
+          }
+
+          if (raw.length > 0) {
+            raw.sort((a, b) => (b.rawTime || 0) - (a.rawTime || 0))
+            const newest = raw[0].rawTime > 1e11 ? raw[0].rawTime : raw[0].rawTime * 1000
+            const ONE_DAY = 24 * 3600 * 1000
+            const ONE_WEEK = 7 * ONE_DAY
+
+            const mapped = raw.map((item, idx) => {
+              const ms = item.rawTime ? (item.rawTime > 1e11 ? item.rawTime : item.rawTime * 1000) : Date.now()
+              const diff = newest - ms
+              let itemPeriod = 'all'
+              if (diff <= ONE_DAY * 2) itemPeriod = 'today'
+              else if (diff <= ONE_WEEK) itemPeriod = 'week'
+
+              return {
+                id: item.id || `loc_${idx + 1}`,
+                latitude: item.latitude,
+                longitude: item.longitude,
+                accuracy: Number(item.accuracy || 8),
+                address: item.address || `GPS Track (${item.latitude.toFixed(4)}° N, ${item.longitude.toFixed(4)}° E)`,
+                timestamp: new Date(ms).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
+                rawTimestamp: ms,
+                period: itemPeriod,
+              }
+            })
+
+            const filtered = mapped.filter((e) => period === 'all' || e.period === period)
+            setEntries(filtered.length > 0 ? filtered : mapped.slice(0, 30))
+            setLoading(false)
+            return
+          }
+        }
+        fallbackFetch()
+      },
+      () => fallbackFetch()
+    )
+
+    const fallbackFetch = async () => {
       try {
         const { data } = await apiClient.get(`/locations/history?period=${period}&deviceId=${deviceId}`)
-        if (data.entries && data.entries.length > 0) {
+        if (isSubscribed && data?.entries?.length > 0) {
           setEntries(data.entries)
-        } else {
-          setEntries(mockLocationHistory.filter((e) => period === 'all' || e.period === period))
+          setLoading(false)
+          return
         }
       } catch (err) {
         console.warn('Using fallback location history:', err.message)
+      }
+      if (isSubscribed) {
         setEntries(mockLocationHistory.filter((e) => period === 'all' || e.period === period))
-      } finally {
         setLoading(false)
       }
     }
 
-    fetchHistory()
+    return () => {
+      isSubscribed = false
+      unsubscribe()
+    }
   }, [period, deviceId])
 
   return { entries, loading }

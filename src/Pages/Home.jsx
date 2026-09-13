@@ -10,15 +10,16 @@ import SystemStatus from '../components/dashboard/SystemStatus'
 import HelmetPreviewCard from '../components/dashboard/HelmetPreviewCard'
 import {
   mockUser,
-  mockCurrentLocation,
   mockRecentActivity,
   mockDeviceStatus,
   mockFrequentPlaces,
   mockSystemStatus,
 } from '../data/mockDashboardData'
+import { useLiveLocation } from '../hooks/useDashboardData'
 
 function Home() {
   const navigate = useNavigate()
+  const { location: liveLoc } = useLiveLocation()
   const currentDate = new Date().toLocaleDateString('en-US', {
     weekday: 'long',
     day: 'numeric',
@@ -51,10 +52,10 @@ function Home() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 px-4 md:px-8 pb-4">
         <CurrentLocation
-          status={mockCurrentLocation.status}
-          address={mockCurrentLocation.address}
-          accuracy={mockCurrentLocation.accuracy}
-          updatedAt={mockCurrentLocation.updatedAt}
+          status={liveLoc.status}
+          address={liveLoc.address}
+          accuracy={liveLoc.accuracy}
+          updatedAt={liveLoc.updatedAt}
           onViewMap={() => navigate('/live-location')}
           onZoomIn={() => {}}
           onZoomOut={() => {}}

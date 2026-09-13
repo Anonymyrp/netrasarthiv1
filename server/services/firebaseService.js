@@ -46,17 +46,24 @@ export const firebaseService = {
   async getLiveLocation() {
     const live = await rtdbGet('live_location')
     if (live) {
-      // Map potential device1 sub-object or flat structure
-      const target = live.device1 || live
+      const dev = live.device1 || live['netra-helmet-01'] || live['netra_sarthi_01'] || {}
+      const lat = dev.latitude !== undefined ? Number(dev.latitude) : (live.latitude !== undefined ? Number(live.latitude) : store.currentLocation.latitude)
+      const lng = dev.longitude !== undefined ? Number(dev.longitude) : (live.longitude !== undefined ? Number(live.longitude) : store.currentLocation.longitude)
+
+      let address = dev.address || live.address
+      if (!address) {
+        address = `Pune Route (${lat.toFixed(4)}° N, ${lng.toFixed(4)}° E)`
+      }
+
       return {
-        status: 'active',
-        latitude: target.latitude !== undefined ? Number(target.latitude) : store.currentLocation.latitude,
-        longitude: target.longitude !== undefined ? Number(target.longitude) : store.currentLocation.longitude,
-        address: target.address || 'Pune, Maharashtra',
-        accuracy: target.accuracy || 10,
-        updatedAt: 'Just now',
-        speed: target.speed || 0,
-        battery: target.battery || 78,
+        status: live.status || 'active',
+        latitude: lat,
+        longitude: lng,
+        address,
+        accuracy: dev.accuracy !== undefined ? Number(dev.accuracy) : (live.accuracy !== undefined ? Number(live.accuracy) : 10),
+        updatedAt: live.updatedAt || 'Just now',
+        speed: dev.speed !== undefined ? Number(dev.speed) : (live.speed !== undefined ? Number(live.speed) : 0),
+        battery: dev.battery !== undefined ? Number(dev.battery) : (live.battery !== undefined ? Number(live.battery) : 85),
       }
     }
     return store.currentLocation
