@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom'
-import Sidebar from '../components/dashboard/Sidebar'
+import DashboardNav from '../components/dashboard/DashboardNav'
 import TopHeader from '../components/dashboard/TopHeader'
 
 const pageMeta = {
@@ -15,9 +15,14 @@ function DashboardLayout({ user, onLogout, onProfileClick, onNotificationClick, 
   const meta = pageMeta[pathname] || {}
 
   return (
-    <div className="flex bg-transparent text-text-primary min-h-screen">
-      <Sidebar />
-      <div className="flex-1 min-w-0 min-h-screen bg-transparent">
+    <div className="dashboard-shell text-text-primary min-h-screen">
+      <DashboardNav
+        userName={user?.name}
+        hasUnreadNotifications={hasUnreadNotifications}
+        onNotificationClick={onNotificationClick}
+        onLogout={onLogout}
+      />
+      <div className="dashboard-content min-w-0 min-h-screen">
         <TopHeader
           title={meta.title}
           subtitle={meta.subtitle}

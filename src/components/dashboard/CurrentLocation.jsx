@@ -1,8 +1,8 @@
 import { MapPin, Plus, Minus, LocateFixed } from 'lucide-react'
 
-function CurrentLocation({ status, address, accuracy, updatedAt, onViewMap, onZoomIn, onZoomOut, onLocate }) {
+function CurrentLocation({ status, address, accuracy, updatedAt, onViewMap, onZoomIn, onZoomOut, onLocate, className = '' }) {
   return (
-    <section className="glass-card ambient-glow rounded-card p-5 col-span-2">
+    <section className={`glass-card ambient-glow rounded-card p-5 dashboard-location-card ${className}`}>
       <div className="flex items-center justify-between mb-4">
         <h2 className="font-semibold text-text-primary flex items-center gap-2">
           <MapPin size={18} className="text-accent-primary" />
@@ -14,7 +14,7 @@ function CurrentLocation({ status, address, accuracy, updatedAt, onViewMap, onZo
         </span>
       </div>
 
-      <div className="map-dark relative overflow-hidden rounded-card h-64 flex items-center justify-center">
+      <div className="map-dark relative overflow-hidden rounded-card dashboard-location-map flex items-center justify-center">
         <div className="map-ring-outer absolute w-40 h-40 rounded-full border" />
         <div className="map-ring-inner absolute w-24 h-24 rounded-full border" />
         <div className="relative">
