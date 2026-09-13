@@ -4,6 +4,7 @@
 > Developed for Smart India Hackathon (SIH)
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-netra--sarathi.vercel.app-blue?style=flat-square&logo=vercel)](https://netra-sarathi.vercel.app/)
+[![Vercel Deployment](https://img.shields.io/badge/Deployment-netrasarthiv1.vercel.app-black?style=flat-square&logo=vercel)](https://netrasarthiv1.vercel.app/)
 [![React](https://img.shields.io/badge/React-19.2-61DAFB?style=flat-square&logo=react)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-7.2-646CFF?style=flat-square&logo=vite)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4.3-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
