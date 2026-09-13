@@ -1,12 +1,31 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ChevronDown, User, Settings, LogOut } from 'lucide-react'
 
 function ProfileMenu({ userName, onSettingsClick, onLogout }) {
   const [open, setOpen] = useState(false)
+  const rootRef = useRef(null)
+
+  useEffect(() => {
+    if (!open) return
+    const onPointerDown = (e) => {
+      if (rootRef.current && !rootRef.current.contains(e.target)) setOpen(false)
+    }
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('mousedown', onPointerDown)
+    document.addEventListener('touchstart', onPointerDown)
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('mousedown', onPointerDown)
+      document.removeEventListener('touchstart', onPointerDown)
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [open ])
 
   return (
-    <div className="relative">
-      <button onClick={() => setOpen(!open)} className="flex items-center gap-2">
+    <div ref={rootRef} className="relative">
+      <button onClick={() => setOpen(!open)} aria-expanded={open} aria-haspopup="menu" className="flex items-center gap-2">
         <div className="w-9 h-9 rounded-full bg-accent-primary text-white flex items-center justify-center text-sm font-semibold">
           {userName?.charAt(0)}
         </div>
