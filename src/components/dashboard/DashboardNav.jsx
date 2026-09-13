@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { Home, Radio, MapPin, Video, Bell, Settings, Cpu, MoreHorizontal, LogOut } from 'lucide-react'
+import { Home, Radio, MapPin, Video, Bell, Settings, Cpu, Sparkles, MoreHorizontal, LogOut } from 'lucide-react'
 import logo from '../../assets/logo.png'
 import ProfileMenu from './ProfileMenu'
 import { mockAlerts } from '../../data/mockDashboardData'
@@ -11,6 +11,7 @@ const navItems = [
   { label: 'Past Locations', path: '/past-locations', icon: MapPin },
   { label: 'Recordings', path: '/recordings', icon: Video },
   { label: 'Devices', path: '/connected-devices', icon: Cpu },
+  { label: 'Features', path: '/features', icon: Sparkles },
   { label: 'Settings', path: '/settings', icon: Settings },
 ]
 

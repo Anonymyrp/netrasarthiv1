@@ -32,15 +32,15 @@ function ConnectedDevices() {
 
   return (
     <div className="px-4 md:px-8 py-6 flex flex-col gap-4 w-full">
-      <div className="flex items-start justify-between gap-4">
-        <div>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+        <div className="min-w-0">
           <h1 className="text-xl font-semibold text-text-primary">Connected Devices</h1>
           <p className="text-sm text-text-secondary mt-1">Devices linked to this account.</p>
         </div>
         <button
           onClick={handleRefresh}
           disabled={refreshing}
-          className="btn-glass px-4 py-2 text-sm font-medium flex items-center gap-2 disabled:opacity-60"
+          className="btn-glass px-4 py-2 text-sm font-medium flex items-center gap-2 shrink-0 disabled:opacity-60"
         >
           <RefreshCw size={16} className={refreshing ? 'animate-spin' : ''} />
           {refreshing ? 'Syncing…' : 'Refresh status'}

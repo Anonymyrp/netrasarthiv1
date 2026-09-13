@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { Radio, MapPin, Video } from 'lucide-react'
+import { Smartphone, MapPin, Video } from 'lucide-react'
 import WelcomeSection from '../components/dashboard/WelcomeSection'
 import ServiceCards from '../components/dashboard/ServiceCards'
 import CurrentLocation from '../components/dashboard/CurrentLocation'
@@ -27,7 +27,7 @@ function Home() {
   })
 
   const services = [
-    { title: 'Live Location', description: 'Track real-time location and get instant updates.', path: '/live-location', icon: Radio },
+    { title: 'Device Connectivity', description: 'Check battery, network and GPS status.', path: '/connected-devices', icon: Smartphone },
     { title: 'Past Locations', description: 'View location history and visited places.', path: '/past-locations', icon: MapPin },
     { title: 'Recordings', description: 'Access and manage video recordings.', path: '/recordings', icon: Video },
   ]
