@@ -25,7 +25,7 @@ if (getApps().length === 0) {
   console.log("Using existing Firebase instance");
 }
 
-// Get database instance
-const db = getDatabase(app);
+// Get database instance with explicit database URL
+const db = getDatabase(app, firebaseConfig.databaseURL);
 
 export { db };
