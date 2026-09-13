@@ -7,6 +7,7 @@ import Recordings from './Pages/Recordings'
 import Alerts from './Pages/Alerts'
 import Settings from './Pages/Settings'
 import ConnectedDevices from './Pages/ConnectedDevices'
+import Features from './Pages/Features'
 
 function App() {
   const user = { name: 'Guardian', tagline: 'Care creates freedom' }
@@ -30,6 +31,7 @@ function App() {
           <Route path="/past-locations" element={<PastLocations />} />
           <Route path="/recordings" element={<Recordings />} />
           <Route path="/connected-devices" element={<ConnectedDevices />} />
+          <Route path="/features" element={<Features />} />
           <Route path="/devices" element={<ConnectedDevices />} />
           <Route path="/alerts" element={<Alerts />} />
           <Route path="/settings" element={<Settings />} />

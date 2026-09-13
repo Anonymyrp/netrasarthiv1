@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { Radio, MapPin, Video } from 'lucide-react'
+import { Smartphone, MapPin, Video } from 'lucide-react'
 import WelcomeSection from '../components/dashboard/WelcomeSection'
 import ServiceCards from '../components/dashboard/ServiceCards'
 import CurrentLocation from '../components/dashboard/CurrentLocation'
@@ -27,7 +27,7 @@ function Home() {
   })
 
   const services = [
-    { title: 'Live Location', description: 'Track real-time location and get instant updates.', path: '/live-location', icon: Radio },
+    { title: 'Device Connectivity', description: 'Check battery, network and GPS status.', path: '/connected-devices', icon: Smartphone },
     { title: 'Past Locations', description: 'View location history and visited places.', path: '/past-locations', icon: MapPin },
     { title: 'Recordings', description: 'Access and manage video recordings.', path: '/recordings', icon: Video },
   ]
@@ -43,11 +43,13 @@ function Home() {
 
       <ServiceCards services={services} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-4 px-4 md:px-8 pb-5 items-stretch dashboard-primary-row">
+      <div className="dashboard-section dashboard-primary-section grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-4 px-4 md:px-8 pb-5 items-stretch dashboard-primary-row">
         <CurrentLocation
           status={liveLoc.status}
           address={liveLoc.address}
           accuracy={liveLoc.accuracy}
+          latitude={liveLoc.latitude}
+          longitude={liveLoc.longitude}
           updatedAt={liveLoc.updatedAt}
           onViewMap={() => navigate('/live-location')}
           onZoomIn={() => {}}
@@ -57,13 +59,13 @@ function Home() {
         <HelmetPreviewCard />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[42fr_33fr_25fr] gap-4 px-4 md:px-8 pb-4 items-stretch dashboard-support-row">
+      <div className="dashboard-section dashboard-support-section grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[42fr_33fr_25fr] gap-4 px-4 md:px-8 pb-4 items-stretch dashboard-support-row">
         <DeviceConnectivity {...mockDeviceStatus} />
         <FrequentPlaces places={mockFrequentPlaces} onSelectPlace={() => {}} />
         <DashboardSettingsCard />
       </div>
 
-      <div className="px-4 md:px-8 pb-8">
+      <div className="dashboard-section dashboard-system-section px-4 md:px-8 pb-8 dashboard-system-row">
         <SystemStatus
           status={mockSystemStatus.status}
           message={mockSystemStatus.message}
