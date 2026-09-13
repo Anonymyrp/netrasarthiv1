@@ -1,10 +1,6 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-<<<<<<< HEAD
-import { Home, Radio, MapPin, Video, Bell, Settings, Cpu } from 'lucide-react'
-=======
 import { Home, Radio, MapPin, Video, Bell, Settings, Cpu, MoreHorizontal } from 'lucide-react'
->>>>>>> feat/updated-theme
 import logo from '../../assets/logo.png'
 import ProfileMenu from './ProfileMenu'
 import { mockAlerts } from '../../data/mockDashboardData'
@@ -21,10 +17,7 @@ const navItems = [
 
 function DashboardNav({ userName, hasUnreadNotifications, onNotificationClick, onLogout }) {
   const [notifOpen, setNotifOpen] = useState(false)
-<<<<<<< HEAD
-=======
   const [moreOpen, setMoreOpen] = useState(false)
->>>>>>> feat/updated-theme
   const [alerts, setAlerts] = useState(mockAlerts)
   const unreadCount = alerts.filter((alert) => !alert.read).length
   const showDot = hasUnreadNotifications || unreadCount > 0
